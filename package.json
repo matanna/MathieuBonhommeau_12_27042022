@@ -17,7 +17,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "api": "docker container run --name micro-api -p 3000:3000 -dt micro-api"
+    "api": "docker container run --name micro-api -p 3000:3000 -dt micro-api",
   },
   "eslintConfig": {
     "extends": [
