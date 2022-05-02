@@ -2,9 +2,12 @@
 $primary: #E5E5E5;
 $secondary: #020203;
 $tertiary: #E60000;
+$bg-page: #FFFFFF;
 
 $text-white: #FFFFFF;
 $text-black: #000000;
+
+$bg-graph: #FBFBFB;
 
 /* width and height */
 $sidebarWidth: 60px;
@@ -16,3 +19,6 @@ $normal-text: 18px;
 $little-text: 12px;
 $label-text: 14px;
 $title-text: 48px;
+
+/* corner radius */
+$graph-radius: 5px;

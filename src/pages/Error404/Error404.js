@@ -5,7 +5,7 @@ const Error404 = () => {
   return (
     <div>
       <h1>404</h1>
-      <Link to="/profil">Retour à la page de profil</Link>
+      <Link to="/profil/:user">Retour à la page de profil</Link>
     </div>
   );
 };
