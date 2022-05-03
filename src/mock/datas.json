@@ -38,28 +38,28 @@
       "sessions": [
         {
           "day": "2022-15-03",
-          "kilogram": 90,
+          "kilogram": 84,
           "calories": 290
         },
         {
           "day": "2022-16-03",
-          "kilogram": 89,
+          "kilogram": 82,
           "calories": 250
         },
         {
           "day": "2020-17-03",
-          "kilogram": 87,
+          "kilogram": 83,
           "calories": 280
         },
         {
           "day": "2022-18-04",
-          "kilogram": 85,
+          "kilogram": 84,
           "calories": 290
         },
         {
           "day": "2022-18-05",
-          "kilogram": 83,
-          "calories": 160
+          "kilogram": 82,
+          "calories": 90
         },
         {
           "day": "2022-15-06",
@@ -68,8 +68,13 @@
         },
         {
           "day": "2022-05-07",
-          "kilogram": 80,
+          "kilogram": 84,
           "calories": 390
+        },
+        {
+          "day": "2022-05-08",
+          "kilogram": 83,
+          "calories": 265
         }
       ]
     },
