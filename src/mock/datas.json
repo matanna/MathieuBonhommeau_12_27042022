@@ -164,7 +164,7 @@
       "sessions": [
         {
           "day": 1,
-          "sessionLength": 30
+          "sessionLength": 70
         },
         {
           "day": 2,
@@ -172,7 +172,7 @@
         },
         {
           "day": 3,
-          "sessionLength": 50
+          "sessionLength": 80
         },
         {
           "day": 4,
@@ -180,15 +180,15 @@
         },
         {
           "day": 5,
-          "sessionLength": 30
+          "sessionLength": 80
         },
         {
           "day": 6,
-          "sessionLength": 50
+          "sessionLength": 30
         },
         {
           "day": 7,
-          "sessionLength": 50
+          "sessionLength": 120
         }
       ]
     }

@@ -150,7 +150,6 @@ class BarChartConstructor {
       .attr("x", (d) => x(d.nbDay))
       //Initial height and y
       .attr("y", (d) => this.graphHeight - x.bandwidth() / 2)
-      //.attr("height", x.bandwidth() / 2)
       // Animation bars
       .transition()
       .duration(1000)
@@ -200,7 +199,6 @@ class BarChartConstructor {
       .attr("x", (d) => x(d.nbDay))
       // Initial height and y
       .attr("y", (d) => this.graphHeight - x.bandwidth() / 2)
-      //.attr("height", x.bandwidth())
       // Animation bars
       .transition()
       .duration(1000)
@@ -289,7 +287,7 @@ class BarChartConstructor {
   elementsOnMouseOver = (rects, x) => {
     //Element displayed on mouseover
     rects.enter().append("g").attr("class", "overElement").attr("opacity", 0);
-    console.log(x.bandwidth());
+
     d3.selectAll(".overElement")
       .append("rect")
       .attr("fill", "#C4C4C4")
