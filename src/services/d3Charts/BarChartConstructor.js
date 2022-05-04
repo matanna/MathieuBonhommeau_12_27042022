@@ -25,6 +25,9 @@ class BarChartConstructor {
       this.dimOfBarChart.height - this.margins.top - this.margins.bottom;
   }
 
+  /**
+   * Construct and get labels and title for the BarChart
+   */
   getLabels = () => {
     const head = this.svg
       .append("g")
@@ -74,6 +77,9 @@ class BarChartConstructor {
       .attr("transform", `translate(16, 0)`);
   };
 
+  /**
+   * Construct the barchart elements
+   */
   getGraph = () => {
     // Groups for bars
     const graph = this.svg
@@ -98,7 +104,7 @@ class BarChartConstructor {
     // Setup of axis Y for Kgs and scale
     const yKgs = d3
       .scaleLinear()
-      .domain([minMaxKgs[0] - 1, minMaxKgs[1]])
+      .domain([minMaxKgs[0] - 1, minMaxKgs[1] + 1])
       .range([this.graphHeight, 0]);
 
     // Setup of axis Y for Calories and scale
@@ -112,66 +118,125 @@ class BarChartConstructor {
     // Link all circle for rounded corner on each bars
     const circles = graph.selectAll("circle").data(this.activityDatas);
 
+    // Axis for the graph
+    this.getAxis(graph, x, yKgs);
+
+    // Elements displayed when mouseover
+    this.elementsOnMouseOver(rects, x);
+
     // Bars for Kgs
     this.getBarsForKilos(rects, circles, x, yKgs);
 
     // Bars for Calories
     this.getBarsForCalories(rects, circles, x, yCalories);
-
-    // Axis for the graph
-    this.getAxis(graph, x, yKgs);
   };
 
+  /**
+   * Construct bars to represent kilograms
+   * @param rects D3 elements
+   * @param circles D3 elements
+   * @param x D3 scale
+   * @param yKgs D3 scale
+   */
   getBarsForKilos(rects, circles, x, yKgs) {
     rects
       .enter()
       .append("rect")
+      .attr("stroke-width", 1)
+      .attr("fill", "#282D30")
       .attr("width", x.bandwidth())
+      .attr("pointer-events", "none")
+      .attr("transform", `translate(-10, ${x.bandwidth() / 2})`)
+      .attr("x", (d) => x(d.nbDay))
+      //Initial height and y
+      .attr("y", (d) => this.graphHeight - x.bandwidth() / 2)
+      //.attr("height", x.bandwidth() / 2)
+      // Animation bars
+      .transition()
+      .duration(1000)
+      .ease(d3.easeCircleOut)
+      // Final height and y
       .attr(
         "height",
         (d) => this.graphHeight - yKgs(d.kilogram) - x.bandwidth() / 2
       )
-      .attr("stroke-width", 1)
-      .attr("x", (d) => x(d.nbDay))
-      .attr("y", (d) => yKgs(d.kilogram))
-      .attr("fill", "#282D30")
-      .attr("transform", `translate(-10, ${x.bandwidth() / 2})`);
+      .attr("y", (d) => yKgs(d.kilogram));
+
     // rounded corner on top
     circles
       .enter()
       .append("circle")
-      .attr("cx", (d) => x(d.nbDay) + x.bandwidth() / 2)
-      .attr("cy", (d) => yKgs(d.kilogram) + x.bandwidth() / 2)
       .attr("r", x.bandwidth() / 2)
       .attr("fill", "#282D30")
-      .attr("transform", `translate(-10, 0)`);
+      .attr("pointer-events", "none")
+      .attr("transform", `translate(-10, 0)`)
+      .attr("cx", (d) => x(d.nbDay) + x.bandwidth() / 2)
+      // Initial cy
+      .attr("cy", this.graphHeight - x.bandwidth() / 2)
+      // Animation bars
+      .transition()
+      .duration(1000)
+      .ease(d3.easeCircleOut)
+      //Final cy
+      .attr("cy", (d) => yKgs(d.kilogram) + x.bandwidth() / 2);
   }
 
+  /**
+   * Construct bars to represent calories
+   * @param rects D3 elements
+   * @param circles D3 elements
+   * @param x D3 scale
+   * @param yCalories D3 scale
+   */
   getBarsForCalories(rects, circles, x, yCalories) {
     rects
       .enter()
       .append("rect")
+      .attr("stroke-width", 1)
+      .attr("fill", "#E60000")
       .attr("width", x.bandwidth())
+      .attr("pointer-events", "none")
+      .attr("transform", `translate(10,${x.bandwidth() / 2})`)
+      .attr("x", (d) => x(d.nbDay))
+      // Initial height and y
+      .attr("y", (d) => this.graphHeight - x.bandwidth() / 2)
+      //.attr("height", x.bandwidth())
+      // Animation bars
+      .transition()
+      .duration(1000)
+      .ease(d3.easeCircleOut)
+      // Final height and y
       .attr(
         "height",
         (d) => this.graphHeight - yCalories(d.calories) - x.bandwidth() / 2
       )
-      .attr("stroke-width", 1)
-      .attr("x", (d) => x(d.nbDay))
-      .attr("y", (d) => yCalories(d.calories))
-      .attr("fill", "#E60000")
-      .attr("transform", `translate(10,${x.bandwidth() / 2})`);
+      .attr("y", (d) => yCalories(d.calories));
+
     // rounded corner on top
     circles
       .enter()
       .append("circle")
-      .attr("cx", (d) => x(d.nbDay) + x.bandwidth() / 2)
-      .attr("cy", (d) => yCalories(d.calories) + x.bandwidth() / 2)
       .attr("r", x.bandwidth() / 2)
       .attr("fill", "#E60000")
-      .attr("transform", `translate(10, 0)`);
+      .attr("pointer-events", "none")
+      .attr("transform", `translate(10, 0)`)
+      .attr("cx", (d) => x(d.nbDay) + x.bandwidth() / 2)
+      // Initial cy
+      .attr("cy", this.graphHeight - x.bandwidth() / 2)
+      // Animation bars
+      .transition()
+      .duration(1000)
+      .ease(d3.easeCircleOut)
+      //Final cy
+      .attr("cy", (d) => yCalories(d.calories) + x.bandwidth() / 2);
   }
 
+  /**
+   * Construct axes for the graph on x and y
+   * @param graph D3 group element
+   * @param x D3 scale
+   * @param yKgs D3 scale
+   */
   getAxis(graph, x, yKgs) {
     // Group for axis X in graph group
     const AxisXgroup = graph
@@ -215,6 +280,65 @@ class BarChartConstructor {
       .attr("stroke-dasharray", "3")
       .attr("stroke", "#DEDEDE");
   }
+
+  /**
+   * Construct elements whiwh are displayed on mouseover event
+   * @param rects D3 elements
+   * @param x D3 scale
+   */
+  elementsOnMouseOver = (rects, x) => {
+    //Element displayed on mouseover
+    rects.enter().append("g").attr("class", "overElement").attr("opacity", 0);
+    console.log(x.bandwidth());
+    d3.selectAll(".overElement")
+      .append("rect")
+      .attr("fill", "#C4C4C4")
+      //.attr("fill-opacity", 0)
+      .attr("width", x.bandwidth() + 40)
+      .attr("height", this.graphHeight)
+      .attr("x", (d) => x(d.nbDay) - 20);
+    d3.selectAll(".overElement")
+      .append("rect")
+      .attr("width", 39)
+      .attr("height", 63)
+      .attr("fill", this.CALORIES_BAR_COLOR)
+      .attr("x", (d) => x(d.nbDay) + 42)
+      .attr("y", -31);
+    d3.selectAll(".overElement")
+      .append("text")
+      .attr("class", "textOver")
+      .text((d) => `${d.kilogram}Kgs`)
+      .attr("fill", "#FFFFFF")
+      .attr("font-size", 8)
+      .attr("alignment-baseline", "handing")
+      .attr("x", (d) => x(d.nbDay) + 42)
+      .attr("y", -10);
+    d3.selectAll(".overElement")
+      .append("text")
+      .attr("class", "textOver")
+      .text((d) => `${d.calories}Kcal`)
+      .attr("fill", "#FFFFFF")
+      .attr("font-size", 8)
+      .attr("x", (d) => x(d.nbDay) + 42)
+      .attr("y", +15);
+
+    d3.selectAll(".textOver").each((d, i, e) => {
+      const w = e[i].getBBox().width;
+      const x = (39 - w) / 2 + e[i].getBBox().x;
+      d3.select(e[i]).attr("x", x);
+    });
+
+    d3.selectAll(".overElement").each((d, i, node) => {
+      d3.select(node[i]).on("mouseover", (e) => {
+        d3.select(node[i]) // Animation bars
+          .attr("opacity", 1);
+      });
+      d3.select(node[i]).on("mouseleave", (e) => {
+        d3.select(node[i]) // Animation bars
+          .attr("opacity", 0);
+      });
+    });
+  };
 }
 
 export default BarChartConstructor;
