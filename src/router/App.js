@@ -11,6 +11,7 @@ function App() {
         <main>
           <Routes>
             <Route path={"/profil/:user"} element={<Profil />} />
+            <Route path={"/error"} element={<Error404 />} />
             <Route path="*" element={<Error404 />} />
           </Routes>
         </main>

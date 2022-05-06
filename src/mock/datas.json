@@ -58,7 +58,7 @@
         },
         {
           "day": "2022-18-05",
-          "kilogram": 82,
+          "kilogram": 83,
           "calories": 90
         },
         {
@@ -104,7 +104,7 @@
         {
           "day": "2020-07-04",
           "kilogram": 70,
-          "calories": 500
+          "calories": 200
         },
         {
           "day": "2020-07-05",
@@ -176,7 +176,7 @@
         },
         {
           "day": 4,
-          "sessionLength": 30
+          "sessionLength": 55
         },
         {
           "day": 5,
@@ -184,7 +184,7 @@
         },
         {
           "day": 6,
-          "sessionLength": 30
+          "sessionLength": 40
         },
         {
           "day": 7,
@@ -197,13 +197,13 @@
   "USER_PERFORMANCE": [
     {
       "userId": 1,
-      "k6ind": {
-        "1": "cardio",
-        "2": "energy",
-        "3": "endurance",
-        "4": "strength",
-        "5": "speed",
-        "6": "intensity"
+      "kind": {
+        "1": "Cardio",
+        "2": "Energie",
+        "3": "Endurance",
+        "4": "Force",
+        "5": "Vitesse",
+        "6": "Intensité"
       },
       "data": [
       {
@@ -235,36 +235,36 @@
     {
       "userId": 2,
       "kind": {
-        "1": "cardio",
-        "2": "energy",
-        "3": "endurance",
-        "4": "strength",
-        "5": "speed",
-        "6": "intensity"
+        "1": "Cardio",
+        "2": "Energie",
+        "3": "Endurance",
+        "4": "Force",
+        "5": "Vitesse",
+        "6": "Intensité"
       },
       "data": [
         {
-          "value": 200,
+          "value": 150,
           "kind": 1
         },
         {
-          "value": 240,
+          "value": 70,
           "kind": 2
         },
         {
-          "value": 80,
+          "value": 220,
           "kind": 3
         },
         {
-          "value": 80,
+          "value": 210,
           "kind": 4
         },
         {
-          "value": 220,
+          "value": 180,
           "kind": 5
         },
         {
-          "value": 110,
+          "value": 150,
           "kind": 6
         }
       ]
