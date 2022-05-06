@@ -1,11 +1,10 @@
 import * as d3 from "d3";
-import mouseOverEvent from "./mouseOverEvent";
 
-class RadarChartConstructor {
+class RadarChartBuilder {
   COLOR_AREA = "#FF0101";
   COLOR = "#FFFFFF";
 
-  constructor(dimOfRadarChart, margins, svg, userPerformance) {
+  constructor(dimOfRadarChart, margins, svg, userPerformance, Style) {
     // Dimensions of svg container
     this.dimOfRadarChart = dimOfRadarChart;
     // Margins in svg for the graph
@@ -14,6 +13,8 @@ class RadarChartConstructor {
     this.svg = svg;
     // Datas fetch from api
     this.userPerformance = userPerformance;
+    // Style from react component module scss
+    this.Style = Style;
 
     // Real dimensions of the graph
     this.graphWidth =
@@ -47,6 +48,7 @@ class RadarChartConstructor {
    *  Initialize the graph
    */
   initGraph = () => {
+    // Move the center of the grapĥ
     const translateX = (this.dimOfRadarChart.width - this.graphWidth) / 2;
     const translateY = (this.dimOfRadarChart.height - this.graphHeight) / 2;
     this.graph = this.svg
@@ -88,8 +90,8 @@ class RadarChartConstructor {
     points.forEach((e, i) => {
       labelGroup
         .append("text")
-        .attr("class", (d) => "radar-label")
-        .text((d) => this.userPerformance.kind[i + 1])
+        .attr("class", "radar-label")
+        .text(this.userPerformance.kind[i + 1])
         .attr("x", e[0])
         .attr("y", e[1])
         .attr("fill", this.COLOR)
@@ -115,7 +117,7 @@ class RadarChartConstructor {
     const AxisGroup = this.graph.append("g");
 
     // Generate coordinate of each polygon
-    axes.forEach((el, i) => {
+    axes.forEach((el) => {
       const points = Object.keys(this.userPerformance.kind).map((e) => [
         this.graphWidth / 2 +
           this.r(el) * Math.cos(this.rad(parseInt(e) - 0.5)),
@@ -136,7 +138,7 @@ class RadarChartConstructor {
    */
   getGraph = () => {
     // Initial coordinates for the animation
-    const pointsInit = this.userPerformance.data.map((e) => [
+    const pointsInit = this.userPerformance.data.map(() => [
       this.graphWidth / 2,
       this.graphHeight / 2,
     ]);
@@ -157,4 +159,4 @@ class RadarChartConstructor {
   };
 }
 
-export default RadarChartConstructor;
+export default RadarChartBuilder;

@@ -3,7 +3,7 @@ import { useRef, useEffect, useState } from "react";
 import Style from "./LinearChart.module.scss";
 import * as d3 from "d3";
 import datas from "../../mock/datas.json";
-import { LinearChartConstructor } from "../../services";
+import { LinearChartBuilder } from "../../services";
 
 const LinearChart = ({ dimOfLinearChart, userId }) => {
   // Init a state for datas fetched from api
@@ -12,6 +12,9 @@ const LinearChart = ({ dimOfLinearChart, userId }) => {
   // Init reference of the svg which displayed the graph
   const svgRef = useRef(null);
 
+  /**
+   * Get data from api
+   */
   useEffect(
     (e) => {
       // Get datas from the api
@@ -22,6 +25,9 @@ const LinearChart = ({ dimOfLinearChart, userId }) => {
     [userSessions]
   );
 
+  /**
+   * Create the graph when the component is mount and rerender
+   */
   useEffect(() => {
     if (userSessions !== {} && dimOfLinearChart.width) {
       // Remove all elements in svg for displayed the new ones with the new datas
@@ -30,11 +36,12 @@ const LinearChart = ({ dimOfLinearChart, userId }) => {
       const margins = { top: 80, bottom: 77, right: 13, left: 13 };
       const svg = d3.select(svgRef.current);
 
-      const linearChart = new LinearChartConstructor(
+      const linearChart = new LinearChartBuilder(
         dimOfLinearChart,
         margins,
         svg,
-        userSessions
+        userSessions,
+        Style
       );
 
       linearChart.buildGraph();

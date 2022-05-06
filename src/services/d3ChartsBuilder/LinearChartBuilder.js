@@ -1,10 +1,10 @@
 import * as d3 from "d3";
 import mouseOverEvent from "./mouseOverEvent";
 
-class LinearChartConstructor {
+class LinearChartBuilder {
   COLOR = "#FFFFFF";
 
-  constructor(dimOfLinearChart, margins, svg, userSessions) {
+  constructor(dimOfLinearChart, margins, svg, userSessions, Style) {
     // Dimensions of svg container
     this.dimOfLinearChart = dimOfLinearChart;
     // Margins in svg for the graph
@@ -13,6 +13,8 @@ class LinearChartConstructor {
     this.svg = svg;
     // Datas fetch from api
     this.userSessions = userSessions;
+    // Style from react component module scss
+    this.Style = Style;
 
     // Real dimensions of the graph
     this.graphWidth =
@@ -224,4 +226,4 @@ class LinearChartConstructor {
   };
 }
 
-export default LinearChartConstructor;
+export default LinearChartBuilder;

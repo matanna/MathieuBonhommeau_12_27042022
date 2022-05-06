@@ -1,12 +1,13 @@
 import * as d3 from "d3";
 import mouseOverEvent from "./mouseOverEvent";
 
-class BarChartConstructor {
+class BarChartBuilder {
   KGS_BAR_COLOR = "#282D30";
   CALORIES_BAR_COLOR = "#E60000";
   TEXT_AXIS_COLOR = "#74798C";
+  TITLE = "Activité quotidienne";
 
-  constructor(dimOfBarChart, margins, svg, activityDatas) {
+  constructor(dimOfBarChart, margins, svg, activityDatas, Style) {
     // Dimensions of svg container
     this.dimOfBarChart = dimOfBarChart;
     // Margins in svg for the graph
@@ -15,6 +16,8 @@ class BarChartConstructor {
     this.svg = svg;
     // Datas fetch from api
     this.activityDatas = activityDatas;
+    // Style from react component module scss
+    this.Style = Style;
 
     // Real dimensions of the graph
     this.graphWidth =
@@ -332,4 +335,4 @@ class BarChartConstructor {
   };
 }
 
-export default BarChartConstructor;
+export default BarChartBuilder;

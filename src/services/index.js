@@ -1,3 +1,4 @@
-export { default as BarChartConstructor } from "./d3ChartsBuilder/BarChartConstructor";
-export { default as LinearChartConstructor } from "./d3ChartsBuilder/LinearChartConstructor";
-export { default as RadarChartConstructor } from "./d3ChartsBuilder/RadarChartConstructor";
+export { default as BarChartBuilder } from "./d3ChartsBuilder/BarChartBuilder";
+export { default as LinearChartBuilder } from "./d3ChartsBuilder/LinearChartBuilder";
+export { default as RadarChartBuilder } from "./d3ChartsBuilder/RadarChartBuilder";
+export { default as CircularChartBuilder } from "./d3ChartsBuilder/CircularChartBuilder";

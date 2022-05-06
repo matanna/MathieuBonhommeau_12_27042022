@@ -3,7 +3,7 @@ import Style from "../RadarChart/RadarChart.module.scss";
 import { useEffect, useRef, useState } from "react";
 import datas from "../../mock/datas.json";
 import * as d3 from "d3";
-import { RadarChartConstructor } from "../../services";
+import { RadarChartBuilder } from "../../services";
 
 const RadarChart = ({ dimOfRadarChart, userId }) => {
   // Init reference of the svg which displayed the graph
@@ -12,6 +12,9 @@ const RadarChart = ({ dimOfRadarChart, userId }) => {
   // Init a state for datas fetched from api
   const [userPerformance, setUserPerformance] = useState({});
 
+  /**
+   * Get data from api
+   */
   useEffect(
     (e) => {
       // Get datas from the api
@@ -22,6 +25,9 @@ const RadarChart = ({ dimOfRadarChart, userId }) => {
     [userPerformance]
   );
 
+  /**
+   * Create the graph when the component is mount and rerender
+   */
   useEffect(() => {
     if (userPerformance !== {} && dimOfRadarChart.width) {
       // Remove all elements in svg for displayed the new ones with the new datas
@@ -30,11 +36,12 @@ const RadarChart = ({ dimOfRadarChart, userId }) => {
       const margins = { top: 40, bottom: 40, right: 40, left: 40 };
       const svg = d3.select(svgRef.current);
 
-      const radarChart = new RadarChartConstructor(
+      const radarChart = new RadarChartBuilder(
         dimOfRadarChart,
         margins,
         svg,
-        userPerformance
+        userPerformance,
+        Style
       );
 
       radarChart.buildGraph();

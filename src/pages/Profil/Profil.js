@@ -1,6 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import Style from "./Profil.module.scss";
-import { BarChart, LinearChart, RadarChart } from "../../components";
+import {
+  BarChart,
+  CircularChart,
+  LinearChart,
+  RadarChart,
+} from "../../components";
 import { Navigate, useParams } from "react-router-dom";
 
 const Profil = () => {
@@ -26,12 +31,20 @@ const Profil = () => {
     height: null,
   });
 
+  // State for width and height of BarChart
+  const [dimOfCircularChart, setDimOfCircularChart] = useState({
+    width: null,
+    height: null,
+  });
+
   // Ref of div which contains barchart graph, allow retrieve size of it (width and height)
   const barChartRef = useRef(null);
   // Ref of div which contains linearchart graph, allow retrieve size of it (width and height)
   const linearChartRef = useRef(null);
   // Ref of div which contains linearchart graph, allow retrieve size of it (width and height)
   const radarChartRef = useRef(null);
+  // Ref of div which contains circularchart graph, allow retrieve size of it (width and height)
+  const circularChartRef = useRef(null);
 
   useEffect(() => {
     setDimOfBarChart({
@@ -45,6 +58,10 @@ const Profil = () => {
     setDimOfRadarChart({
       width: radarChartRef.current.offsetWidth,
       height: radarChartRef.current.offsetHeight,
+    });
+    setDimOfCircularChart({
+      width: circularChartRef.current.offsetWidth,
+      height: circularChartRef.current.offsetHeight,
     });
     /*window.addEventListener("resize", (e) => {
       setDimOfBarChart({
@@ -78,7 +95,12 @@ const Profil = () => {
             <div ref={radarChartRef} className={Style.radarChart}>
               <RadarChart dimOfRadarChart={dimOfRadarChart} userId={userId} />
             </div>
-            <div className={Style.circularChart}> CircularChart </div>
+            <div ref={circularChartRef} className={Style.circularChart}>
+              <CircularChart
+                dimOfCircularChar={dimOfCircularChart}
+                userId={userId}
+              />
+            </div>
           </div>
           <div className={Style.userInfos}></div>
         </div>
