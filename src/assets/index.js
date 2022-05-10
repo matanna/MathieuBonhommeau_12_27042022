@@ -3,3 +3,7 @@ export { default as fitness } from "./img/fitness.svg";
 export { default as swim } from "./img/swim.svg";
 export { default as yoga } from "./img/yoga.svg";
 export { default as logo } from "./img/logo.png";
+export { default as lipidIcon } from "./img/lipidIcon.svg";
+export { default as carbohydrateIcon } from "./img/carbohydrateIcon.svg";
+export { default as proteinIcon } from "./img/proteinIcon.svg";
+export { default as calorieIcon } from "./img/calorieIcon.svg";

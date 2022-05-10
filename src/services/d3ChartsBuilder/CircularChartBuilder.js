@@ -62,7 +62,7 @@ class RadarCircularBuilder {
     pourcent
       .append("text")
       .attr("class", "pourcent-text")
-      .text(this.userData.score * 100 + "%")
+      .text(this.userData.todayScore * 100 + "%")
       .attr("font-size", 18);
 
     const subtitle = pourcent
@@ -86,8 +86,8 @@ class RadarCircularBuilder {
   getGraph = () => {
     // Calcul angle of pie
     const pies = d3.pie().sort(null)([
-      this.userData.score,
-      1 - this.userData.score,
+      this.userData.todayScore,
+      1 - this.userData.todayScore,
     ]);
     const segments = d3.arc().innerRadius(80).outerRadius(90).cornerRadius(10);
     // Interpolate function for animation

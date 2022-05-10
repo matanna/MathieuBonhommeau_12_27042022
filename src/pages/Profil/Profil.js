@@ -7,11 +7,20 @@ import {
   RadarChart,
 } from "../../components";
 import { Navigate, useParams } from "react-router-dom";
+import UserKeyDatas from "../../components/UserKeyDatas/UserKeyDatas";
+import {
+  calorieIcon,
+  carbohydrateIcon,
+  proteinIcon,
+  lipidIcon,
+} from "../../assets";
+import { useFetchDatas } from "../../services";
+import { UserIdProvider } from "../../context/UserIdContext";
 
 const Profil = () => {
   // Get user id from the url
   const params = useParams();
-  const userId = parseInt(params.user);
+  const userId = params.user;
 
   // State for width and height of BarChart
   const [dimOfBarChart, setDimOfBarChart] = useState({
@@ -63,19 +72,30 @@ const Profil = () => {
       width: circularChartRef.current.offsetWidth,
       height: circularChartRef.current.offsetHeight,
     });
-    /*window.addEventListener("resize", (e) => {
-      setDimOfBarChart({
-        width: barChartRef.current.offsetWidth,
-        height: barChartRef.current.offsetHeight,
-      });
-    });*/
   }, []);
 
+  // State for user infos
+  const [userInfos, setUserInfos] = useState({});
+
+  /**
+   * Get datas from api
+   */
+  const { datas, error } = useFetchDatas(userId, "");
+
+  useEffect(() => {
+    if (Object.keys(datas).length !== 0) {
+      setUserInfos(datas.userInfos);
+    }
+  }, [datas]);
+
   return userId ? (
-    <>
+    <UserIdProvider value={userId}>
       <div role="heading" aria-level="1" className={Style.titleContainer}>
         <h1 className={Style.title}>
-          Bonjour <span className={Style.userName}>Toto</span>
+          Bonjour{" "}
+          <span className={Style.userName}>
+            {userInfos && userInfos.firstName}
+          </span>
         </h1>
         <p>Félicitation ! Vous avez explosé vos objectifs hier 👏</p>
       </div>
@@ -84,28 +104,27 @@ const Profil = () => {
         <div className={Style.dashboard}>
           <div className={Style.graphs}>
             <div ref={barChartRef} className={Style.barChart}>
-              <BarChart dimOfBarChart={dimOfBarChart} userId={userId} />
+              <BarChart dimOfBarChart={dimOfBarChart} />
             </div>
             <div ref={linearChartRef} className={Style.linearChart}>
-              <LinearChart
-                dimOfLinearChart={dimOfLinearChart}
-                userId={userId}
-              />
+              <LinearChart dimOfLinearChart={dimOfLinearChart} />
             </div>
             <div ref={radarChartRef} className={Style.radarChart}>
-              <RadarChart dimOfRadarChart={dimOfRadarChart} userId={userId} />
+              <RadarChart dimOfRadarChart={dimOfRadarChart} />
             </div>
             <div ref={circularChartRef} className={Style.circularChart}>
-              <CircularChart
-                dimOfCircularChar={dimOfCircularChart}
-                userId={userId}
-              />
+              <CircularChart dimOfCircularChar={dimOfCircularChart} />
             </div>
           </div>
-          <div className={Style.userInfos}></div>
+          <div className={Style.userInfos}>
+            <UserKeyDatas dataName="calorie" icon={calorieIcon} />
+            <UserKeyDatas dataName="protein" icon={proteinIcon} />
+            <UserKeyDatas dataName="carbohydrate" icon={carbohydrateIcon} />
+            <UserKeyDatas dataName="lipid" icon={lipidIcon} />
+          </div>
         </div>
       </section>
-    </>
+    </UserIdProvider>
   ) : (
     <Navigate to="/error" replace="true" />
   );

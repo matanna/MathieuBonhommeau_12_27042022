@@ -96,12 +96,14 @@ class LinearChartBuilder {
       .attr("transform", `translate(0, ${this.graphHeight})`);
     const axisYGroup = this.graph.append("g");
 
+    const week = ["L", "M", "M", "J", "V", "S", "D"];
+
     const axisX = d3
       .axisBottom(this.x)
       .ticks(this.userSessions.sessions.length)
       .tickPadding(40)
       .tickSize(0)
-      .tickFormat(d3.format("d"));
+      .tickFormat((d) => week[d - 1]);
     const axisY = d3.axisLeft(this.y).ticks(0);
 
     axisXGroup
@@ -169,6 +171,19 @@ class LinearChartBuilder {
     //Element displayed on mouseover
     const overElements = this.graph.append("g");
 
+    overElements
+      .selectAll(".layer")
+      .data(this.userSessions.sessions)
+      .enter()
+      .append("rect")
+      .attr("class", "layer")
+      .attr("height", this.dimOfLinearChart.height)
+      .attr("width", this.dimOfLinearChart.width)
+      .attr("x", (d) => `${-this.margins.left + this.x(d.day) + 13}`)
+      .attr("y", `${-this.margins.top}`)
+      .attr("pointer-events", "none")
+      .attr("opacity", 0);
+
     // Create the group for over elements
     const overElement = overElements
       .selectAll(".overLinearChart")
@@ -220,7 +235,8 @@ class LinearChartBuilder {
           : this.x(d.day)
       )
       .attr("y", (d) => this.y(d.sessionLength) - 26)
-      .attr("font-size", 8);
+      .attr("font-size", 8)
+      .attr("font-weight", "500");
 
     mouseOverEvent("overLinearChart");
   };

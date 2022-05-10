@@ -83,7 +83,7 @@ class RadarChartBuilder {
         this.r(parseInt(this.max + 120)) *
           Math.cos(this.rad(parseInt(e) - 0.5)),
       this.graphHeight / 2 +
-        this.r(parseInt(this.max + 70)) * Math.sin(this.rad(parseInt(e) - 0.5)),
+        this.r(parseInt(this.max + 80)) * Math.sin(this.rad(parseInt(e) - 0.5)),
     ]);
 
     // Position of each label

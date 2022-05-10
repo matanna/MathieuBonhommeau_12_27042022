@@ -11,12 +11,21 @@ const mouseOverEvent = (className) => {
     d3.select(node[i]).on("mouseover", (e) => {
       d3.select(node[i]) // Animation bars
         .attr("opacity", 1);
+      if (className === "overLinearChart") {
+        d3.selectAll(".layer").each((d, j, node) => {
+          i === j && d3.select(node[j]).attr("opacity", 0.2);
+        });
+      }
     });
     d3.select(node[i]).on("mouseout", (e) => {
       d3.select(node[i]) // Animation bars
         .attr("opacity", 0);
+      if (className === "overLinearChart") {
+        d3.selectAll(".layer").each((d, j, node) => {
+          i === j && d3.select(node[j]).attr("opacity", 0);
+        });
+      }
     });
   });
 };
-
 export default mouseOverEvent;

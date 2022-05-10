@@ -14,6 +14,10 @@ body {
 main {
   padding: 68px 90px 90px 110px;
   width: 100%;
+
+  @media screen and (max-width: 1200px) {
+    padding: 50px 50px 50px 50px;
+  }
 }
 
 h1 {

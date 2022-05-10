@@ -1,36 +1,32 @@
 import PropTypes from "prop-types";
 import * as d3 from "d3";
-import datas from "../../mock/datas.json";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef } from "react";
 import Style from "./BarChart.module.scss";
-import { BarChartBuilder } from "../../services";
+import { BarChartBuilder, useFetchDatas } from "../../services";
+import { UserIdContext } from "../../context/UserIdContext";
 
-const BarChart = ({ dimOfBarChart, userId }) => {
+const BarChart = ({ dimOfBarChart }) => {
   // Init reference of the svg which displayed the graph
   const svgRef = useRef(null);
 
-  // Init a state for datas fetched from api
-  const [userActivity, setUserActivity] = useState({});
+  const userId = useContext(UserIdContext);
 
   /**
-   * Get data from api
+   * Get datas from api
    */
-  useEffect(() => {
-    // Get activity datas thanks to user id
-    setUserActivity(datas.USER_ACTIVITY.find((user) => user.userId === userId));
-  }, [userActivity]);
+  const { datas, error } = useFetchDatas(userId, "activity");
 
   /**
    * Create the graph when the component is mount and rerender
    */
   useEffect(() => {
     // Launch build graph only if all datas available
-    if (userActivity !== {} && dimOfBarChart.width) {
+    if (Object.keys(datas).length !== 0 && dimOfBarChart.width) {
       // Remove all elements in svg for displayed the new ones with the new datas
       d3.selectAll("#barChart > *").remove();
 
       // Get datas for fill the graph
-      const activityDatas = userActivity.sessions.map((session, i) => ({
+      const activityDatas = datas.sessions.map((session, i) => ({
         kilogram: session.kilogram,
         day: session.day,
         nbDay: i + 1,
@@ -54,15 +50,18 @@ const BarChart = ({ dimOfBarChart, userId }) => {
 
       barChart.buildGraph();
     }
-  }, [userActivity, dimOfBarChart]);
+  }, [datas, dimOfBarChart]);
 
   return (
     <svg
       id="barChart"
       className={Style.barChart}
       ref={svgRef}
-      width={dimOfBarChart.width}
-      height={dimOfBarChart.height}
+      width="100%"
+      height="100%"
+      viewBox={`0 0 ${dimOfBarChart.width ? dimOfBarChart.width : 0} ${
+        dimOfBarChart.height ? dimOfBarChart.height : 0
+      }`}
     ></svg>
   );
 };

@@ -1,60 +1,60 @@
 import PropTypes from "prop-types";
 import Style from "../RadarChart/RadarChart.module.scss";
-import { useEffect, useRef, useState } from "react";
-import datas from "../../mock/datas.json";
+import { useEffect, useRef, useContext } from "react";
 import * as d3 from "d3";
-import { RadarChartBuilder } from "../../services";
+import { RadarChartBuilder, useFetchDatas } from "../../services";
+import { UserIdContext } from "../../context/UserIdContext";
 
-const RadarChart = ({ dimOfRadarChart, userId }) => {
+const RadarChart = ({ dimOfRadarChart }) => {
   // Init reference of the svg which displayed the graph
   const svgRef = useRef(null);
 
-  // Init a state for datas fetched from api
-  const [userPerformance, setUserPerformance] = useState({});
+  const userId = useContext(UserIdContext);
 
   /**
-   * Get data from api
+   * Get datas from api
    */
-  useEffect(
-    (e) => {
-      // Get datas from the api
-      setUserPerformance(
-        datas.USER_PERFORMANCE.find((e) => e.userId === userId)
-      );
-    },
-    [userPerformance]
-  );
+  const { datas, error } = useFetchDatas(userId, "performance");
 
   /**
    * Create the graph when the component is mount and rerender
    */
   useEffect(() => {
-    if (userPerformance !== {} && dimOfRadarChart.width) {
+    if (Object.keys(datas).length !== 0 && dimOfRadarChart.width) {
       // Remove all elements in svg for displayed the new ones with the new datas
       d3.selectAll("#radarChart > *").remove();
 
-      const margins = { top: 40, bottom: 40, right: 40, left: 40 };
+      let margins = { top: 40, bottom: 40, right: 40, left: 40 };
+      if (dimOfRadarChart.width < 360) {
+        margins = { top: 20, bottom: 20, right: 20, left: 20 };
+      }
+      if (dimOfRadarChart.width < 300) {
+        margins = { top: 10, bottom: 10, right: 10, left: 10 };
+      }
       const svg = d3.select(svgRef.current);
 
       const radarChart = new RadarChartBuilder(
         dimOfRadarChart,
         margins,
         svg,
-        userPerformance,
+        datas,
         Style
       );
 
       radarChart.buildGraph();
     }
-  });
+  }, [datas, dimOfRadarChart]);
 
   return (
     <svg
       id="radarChart"
       className={Style.radarChart}
       ref={svgRef}
-      width={dimOfRadarChart.width}
-      height={dimOfRadarChart.height}
+      width="100%"
+      height="100%"
+      viewBox={`0 0 ${dimOfRadarChart.width ? dimOfRadarChart.width : 0} ${
+        dimOfRadarChart.height ? dimOfRadarChart.height : 0
+      }`}
     ></svg>
   );
 };

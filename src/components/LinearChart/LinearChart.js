@@ -1,35 +1,26 @@
 import PropTypes from "prop-types";
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useContext } from "react";
 import Style from "./LinearChart.module.scss";
 import * as d3 from "d3";
-import datas from "../../mock/datas.json";
-import { LinearChartBuilder } from "../../services";
+import { LinearChartBuilder, useFetchDatas } from "../../services";
+import { UserIdContext } from "../../context/UserIdContext";
 
-const LinearChart = ({ dimOfLinearChart, userId }) => {
-  // Init a state for datas fetched from api
-  const [userSessions, setUserSessions] = useState({});
+const LinearChart = ({ dimOfLinearChart }) => {
+  const userId = useContext(UserIdContext);
 
   // Init reference of the svg which displayed the graph
   const svgRef = useRef(null);
 
   /**
-   * Get data from api
+   * Get datas from api
    */
-  useEffect(
-    (e) => {
-      // Get datas from the api
-      setUserSessions(
-        datas.USER_AVERAGE_SESSIONS.find((e) => e.userId === userId)
-      );
-    },
-    [userSessions]
-  );
+  const { datas, error } = useFetchDatas(userId, "average-sessions");
 
   /**
    * Create the graph when the component is mount and rerender
    */
   useEffect(() => {
-    if (userSessions !== {} && dimOfLinearChart.width) {
+    if (Object.keys(datas).length !== 0 && dimOfLinearChart.width) {
       // Remove all elements in svg for displayed the new ones with the new datas
       d3.selectAll("#linearChart > *").remove();
 
@@ -40,21 +31,24 @@ const LinearChart = ({ dimOfLinearChart, userId }) => {
         dimOfLinearChart,
         margins,
         svg,
-        userSessions,
+        datas,
         Style
       );
 
       linearChart.buildGraph();
     }
-  }, [dimOfLinearChart, userSessions]);
+  }, [dimOfLinearChart, datas]);
 
   return (
     <svg
       id="linearChart"
       className={Style.linearChart}
       ref={svgRef}
-      width={dimOfLinearChart.width}
-      height={dimOfLinearChart.height}
+      width="100%"
+      height="100%"
+      viewBox={`0 0 ${dimOfLinearChart.width ? dimOfLinearChart.width : 0} ${
+        dimOfLinearChart.height ? dimOfLinearChart.height : 0
+      }`}
     ></svg>
   );
 };

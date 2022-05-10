@@ -1,0 +1,39 @@
+@import "../../style/variables";
+
+.dataKeys {
+  display: flex;
+  background: $bg-graph;
+  height: 100%;
+  align-items: center;
+  padding: 32px;
+  gap: 23px;
+
+  @media screen and (max-width: 1200px) {
+    padding: 20px;
+  }
+
+  img {
+    width: 60px;
+
+    @media screen and (max-width: 1200px) {
+      width: 40px;
+    }
+  }
+
+  &__details {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  &__qty {
+    font-size: 20px;
+    font-weight: 700;
+  }
+
+  &__name {
+    font-size: $label-text;
+    font-weight: 500;
+    color: $text-grey;
+  }
+}

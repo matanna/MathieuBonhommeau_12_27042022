@@ -5,7 +5,6 @@ class BarChartBuilder {
   KGS_BAR_COLOR = "#282D30";
   CALORIES_BAR_COLOR = "#E60000";
   TEXT_AXIS_COLOR = "#74798C";
-  TITLE = "Activité quotidienne";
 
   constructor(dimOfBarChart, margins, svg, activityDatas, Style) {
     // Dimensions of svg container
