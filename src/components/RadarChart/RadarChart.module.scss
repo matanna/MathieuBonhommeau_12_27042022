@@ -1,0 +1,7 @@
+@import "../../style/variables";
+
+.radarChart {
+  background: $bg-radar-graph;
+  border-radius: $graph-radius;
+  width: 100%;
+}

@@ -1,0 +1,21 @@
+@import "../../style/variables";
+
+.headerContainer {
+  background: $secondary;
+  height: $sidebarWidth;
+  padding: $paddingSidebar;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: $text-white;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+
+  .logoContainer {
+    height: 100%;
+
+    img {
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+}

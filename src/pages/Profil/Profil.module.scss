@@ -1,0 +1,78 @@
+@import "../../style/variables";
+
+.titleContainer {
+  padding-bottom: 77px;
+
+  @media screen and (max-width: 1200px) {
+    padding-bottom: 40px;
+  }
+
+  .title {
+    margin-bottom: 40px;
+
+    .userName {
+      color: $tertiary;
+    }
+  }
+}
+
+.hiddenTitle {
+  visibility: hidden;
+}
+
+.dashboard {
+  display: flex;
+  justify-content: space-between;
+
+  @media screen and (max-width: 1200px) {
+    flex-direction: column-reverse;
+  }
+
+  .graphs {
+    width: 75%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 320px 300px;
+    gap: 30px;
+
+    @media screen and (max-width: 1440px) {
+      grid-template-rows: 320px 263px;
+    }
+
+    @media screen and (max-width: 1200px) {
+      width: 100%;
+    }
+
+    .barChart {
+      grid-column: 1/4;
+
+      @media screen and (max-width: 1200px) {
+        height: 300px;
+      }
+    }
+    .linearChart {
+      grid-column: 1;
+    }
+    .radarChart {
+      grid-column: 2;
+    }
+    .circularChart {
+      grid-column: 3;
+    }
+  }
+
+  .userInfos {
+    width: 20%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 39px;
+
+    @media screen and (max-width: 1200px) {
+      width: 100%;
+      flex-direction: row;
+      margin-bottom: 39px;
+    }
+  }
+}
+

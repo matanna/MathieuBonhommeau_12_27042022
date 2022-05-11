@@ -1,0 +1,8 @@
+@import "../../style/variables";
+
+.barChart {
+  background: $bg-graph;
+  border-radius: $graph-radius;
+  font-size: $label-text;
+  width: 100%;
+}

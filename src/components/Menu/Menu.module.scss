@@ -1,0 +1,12 @@
+@import "../../style/variables";
+
+.nav {
+  width: 85%;
+  font-size: $medium-text;
+
+  ul {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+  }
+}

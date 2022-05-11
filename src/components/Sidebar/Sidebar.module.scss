@@ -1,0 +1,26 @@
+@import "../../style/variables";
+
+.sidebar {
+  width: $sidebarWidth;
+  background: $secondary;
+  color: $text-white;
+  padding: $paddingSidebar;
+  height: 1000px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+
+  li {
+    padding-top: 20px;
+  }
+
+  footer {
+
+    p {
+      transform: rotate(-90deg) translateX(80px);
+      white-space: nowrap;
+      font-size: $little-text;
+    }
+  }
+}

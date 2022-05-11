@@ -1,0 +1,274 @@
+{
+  "USER_MAIN_DATA": [
+    {
+      "userId": 12,
+      "userInfos": {
+        "firstName": "John",
+        "lastName": "Doe",
+        "age": 38
+      },
+      "todayScore": 0.25,
+      "keyData": {
+        "calorieCount": 1450,
+        "proteinCount": 101,
+        "carbohydrateCount": 305,
+        "lipidCount": 25
+      }
+    },
+    {
+      "userId": 18,
+      "userInfos": {
+        "firstName": "Alice",
+        "lastName": "Cambell",
+        "age": 28
+      },
+      "todayScore": 0.4,
+      "keyData": {
+        "calorieCount": 2250,
+        "proteinCount": 150,
+        "carbohydrateCount": 75,
+        "lipidCount": 150
+      }
+    }
+  ],
+
+  "USER_ACTIVITY" : [
+    {
+      "userId": 12,
+      "sessions": [
+        {
+          "day": "2022-15-03",
+          "kilogram": 84,
+          "calories": 290
+        },
+        {
+          "day": "2022-16-03",
+          "kilogram": 82,
+          "calories": 250
+        },
+        {
+          "day": "2020-17-03",
+          "kilogram": 83,
+          "calories": 280
+        },
+        {
+          "day": "2022-18-04",
+          "kilogram": 84,
+          "calories": 290
+        },
+        {
+          "day": "2022-18-05",
+          "kilogram": 83,
+          "calories": 90
+        },
+        {
+          "day": "2022-15-06",
+          "kilogram": 83,
+          "calories": 162
+        },
+        {
+          "day": "2022-05-07",
+          "kilogram": 84,
+          "calories": 390
+        },
+        {
+          "day": "2022-05-08",
+          "kilogram": 83,
+          "calories": 265
+        },
+        {
+          "day": "2022-55-08",
+          "kilogram": 82,
+          "calories": 304
+        }
+      ]
+    },
+    {
+      "userId": 18,
+      "sessions": [
+        {
+          "day": "2020-07-01",
+          "kilogram": 70,
+          "calories": 240
+        },
+        {
+          "day": "2020-07-02",
+          "kilogram": 69,
+          "calories": 220
+        },
+        {
+          "day": "2020-07-03",
+          "kilogram": 70,
+          "calories": 280
+        },
+        {
+          "day": "2020-07-04",
+          "kilogram": 70,
+          "calories": 200
+        },
+        {
+          "day": "2020-07-05",
+          "kilogram": 69,
+          "calories": 160
+        },
+        {
+          "day": "2020-07-06",
+          "kilogram": 69,
+          "calories": 162
+        },
+        {
+          "day": "2020-07-07",
+          "kilogram": 69,
+          "calories": 390
+        }
+      ]
+    }
+  ],
+
+  "USER_AVERAGE_SESSIONS": [
+    {
+      "userId": 12,
+      "sessions": [
+        {
+          "day": 1,
+          "sessionLength": 30
+        },
+        {
+          "day": 2,
+          "sessionLength": 23
+        },
+        {
+          "day": 3,
+          "sessionLength": 45
+        },
+        {
+          "day": 4,
+          "sessionLength": 50
+        },
+        {
+          "day": 5,
+          "sessionLength": 0
+        },
+        {
+          "day": 6,
+          "sessionLength": 0
+        },
+        {
+          "day": 7,
+          "sessionLength": 60
+        }
+      ]
+    },
+    {
+      "userId": 18,
+      "sessions": [
+        {
+          "day": 1,
+          "sessionLength": 70
+        },
+        {
+          "day": 2,
+          "sessionLength": 40
+        },
+        {
+          "day": 3,
+          "sessionLength": 80
+        },
+        {
+          "day": 4,
+          "sessionLength": 55
+        },
+        {
+          "day": 5,
+          "sessionLength": 80
+        },
+        {
+          "day": 6,
+          "sessionLength": 40
+        },
+        {
+          "day": 7,
+          "sessionLength": 120
+        }
+      ]
+    }
+  ],
+
+  "USER_PERFORMANCE": [
+    {
+      "userId": 12,
+      "kind": {
+        "1": "Cardio",
+        "2": "Energie",
+        "3": "Endurance",
+        "4": "Force",
+        "5": "Vitesse",
+        "6": "Intensité"
+      },
+      "data": [
+      {
+          "value": 80,
+          "kind": 1
+        },
+        {
+          "value": 120,
+          "kind": 2
+        },
+        {
+          "value": 140,
+          "kind": 3
+        },
+        {
+          "value": 50,
+          "kind": 4
+        },
+        {
+          "value": 200,
+          "kind": 5
+        },
+        {
+          "value": 90,
+          "kind": 6
+        }
+      ]
+    },
+    {
+      "userId": 18,
+      "kind": {
+        "1": "Cardio",
+        "2": "Energie",
+        "3": "Endurance",
+        "4": "Force",
+        "5": "Vitesse",
+        "6": "Intensité"
+      },
+      "data": [
+        {
+          "value": 150,
+          "kind": 1
+        },
+        {
+          "value": 70,
+          "kind": 2
+        },
+        {
+          "value": 220,
+          "kind": 3
+        },
+        {
+          "value": 210,
+          "kind": 4
+        },
+        {
+          "value": 180,
+          "kind": 5
+        },
+        {
+          "value": 150,
+          "kind": 6
+        }
+      ]
+    }
+  ]
+}
+
