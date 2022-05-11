@@ -59,11 +59,25 @@ class RadarCircularBuilder {
       .attr("y", -this.graphHeight / 2);
 
     const pourcent = label.append("g");
+
     pourcent
       .append("text")
       .attr("class", "pourcent-text")
-      .text(this.userData.todayScore * 100 + "%")
-      .attr("font-size", 18);
+      .attr("font-size", 18)
+      //.text(this.userData.todayScore * 100 + "%")
+      .text(this.userData.todayScore * 100)
+      .attr("x", -5)
+      .transition()
+      .duration(2000)
+      .ease(d3.easeCircleOut)
+      .textTween((d) => d3.interpolateRound(0, this.userData.todayScore * 100));
+
+    pourcent
+      .append("text")
+      .attr("class", "pourcent-text")
+      .attr("font-size", 18)
+      .text("%")
+      .attr("x", 15);
 
     const subtitle = pourcent
       .append("text")
@@ -110,7 +124,7 @@ class RadarCircularBuilder {
         i === 0 ? this.COLOR_AREA : this.COLOR_AREA_EMPTY
       )
       .transition()
-      .duration(1000)
+      .duration(2000)
       .ease(d3.easeCircleOut)
       .attrTween("d", interpolate);
 

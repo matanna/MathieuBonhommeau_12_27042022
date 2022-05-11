@@ -66,6 +66,4 @@ const BarChart = ({ dimOfBarChart }) => {
   );
 };
 
-BarChart.propTypes = {};
-
 export default BarChart;
