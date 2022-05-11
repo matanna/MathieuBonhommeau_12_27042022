@@ -74,7 +74,6 @@ class RadarCircularBuilder {
     subtitle.append("tspan").text("objectif").attr("x", 0).attr("y", 50);
 
     d3.selectAll(".pourcent-text").each((d, i, e) => {
-      console.log(e[i].getBBox().width);
       const w = e[i].getBBox().width;
       d3.select(e[i]).attr("transform", `translate(${-w / 2}, 0)`);
     });

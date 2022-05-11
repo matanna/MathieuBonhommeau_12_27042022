@@ -16,6 +16,7 @@ import {
 } from "../../assets";
 import { useFetchDatas } from "../../services";
 import { UserIdProvider } from "../../context/UserIdContext";
+import { AxiosError } from "axios";
 
 const Profil = () => {
   // Get user id from the url
@@ -88,7 +89,9 @@ const Profil = () => {
     }
   }, [datas]);
 
-  return userId ? (
+  return error instanceof AxiosError || error instanceof Error ? (
+    <Navigate to="/error" replace="true" />
+  ) : (
     <UserIdProvider value={userId}>
       <div role="heading" aria-level="1" className={Style.titleContainer}>
         <h1 className={Style.title}>
@@ -125,8 +128,6 @@ const Profil = () => {
         </div>
       </section>
     </UserIdProvider>
-  ) : (
-    <Navigate to="/error" replace="true" />
   );
 };
 

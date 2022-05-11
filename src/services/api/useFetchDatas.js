@@ -13,34 +13,31 @@ const MOCK_KEYS = {
 const useFetchDatas = (userId = "", expectedData = "") => {
   const { REACT_APP_ENV } = process.env;
 
-  const [url, setUrl] = useState("");
   const [datas, setDatas] = useState({});
   const [error, setError] = useState({});
 
-  useEffect(
-    (e) => {
-      if (REACT_APP_ENV === "prod") {
-        setUrl(`/${userId}/${expectedData}`);
+  useEffect((e) => {
+    if (REACT_APP_ENV === "prod") {
+      if (!userId) return;
 
-        if (!userId) return;
+      axios
+        .get(`${userId}/${expectedData}`)
+        .then((response) => response.data)
+        .then((value) => {
+          setDatas(value.data);
+        })
+        .catch((err) => setError(err));
+    } else if (REACT_APP_ENV === "test") {
+      const key = Object.keys(MOCK_KEYS).find(
+        (e) => MOCK_KEYS[e] === expectedData
+      );
+      const results = mockDatas[key].find((e) => e.userId === parseInt(userId));
+      results !== undefined
+        ? setDatas(results)
+        : setError(new Error("Cette ressource n'existe pas"));
+    }
+  }, []);
 
-        axios
-          .get(url)
-          .then((response) => response.data)
-          .then((value) => {
-            setDatas(value.data);
-          })
-          .catch((err) => setError(err));
-      } else if (REACT_APP_ENV === "test") {
-        const key = Object.keys(MOCK_KEYS).find(
-          (e) => MOCK_KEYS[e] === expectedData
-        );
-
-        setDatas(mockDatas[key].find((e) => e.userId === userId));
-      }
-    },
-    [url]
-  );
   return { datas, error };
 };
 

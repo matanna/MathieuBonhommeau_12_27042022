@@ -26,7 +26,7 @@ const CircularChart = ({ dimOfCircularChar }) => {
 
       const margins = { top: 40, bottom: 40, right: 40, left: 40 };
       const svg = d3.select(svgRef.current);
-      console.log(datas);
+
       const circularChart = new CircularChartBuilder(
         dimOfCircularChar,
         margins,
