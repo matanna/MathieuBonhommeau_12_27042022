@@ -5,15 +5,25 @@ import * as d3 from "d3";
 import { LinearChartBuilder, useFetchDatas } from "../../services";
 import { UserIdContext } from "../../context/UserIdContext";
 
+/**
+ * Component for creating a linear chart using d3
+ * @param dimOfLinearChart Object
+ * @returns {JSX.Element} A svg element with the id linearChart, the className linearChart, the ref svgRef, the width 100%, the height 100%
+ */
 const LinearChart = ({ dimOfLinearChart }) => {
+  /**
+   * UserId which is retrieved by the context
+   * @type {string}
+   */
   const userId = useContext(UserIdContext);
 
-  // Init reference of the svg which displayed the graph
+  /**
+   * Reference of the svg which displayed the graph
+   * @type {React.MutableRefObject}
+   */
   const svgRef = useRef(null);
 
-  /**
-   * Get datas from api
-   */
+  // Get datas from api
   const { datas, error } = useFetchDatas(userId, "average-sessions");
 
   /**
@@ -21,12 +31,25 @@ const LinearChart = ({ dimOfLinearChart }) => {
    */
   useEffect(() => {
     if (Object.keys(datas).length !== 0 && dimOfLinearChart.width) {
-      // Remove all elements in svg for displayed the new ones with the new datas
+      // First, remove all elements in svg for displayed the new ones with the new datas
       d3.selectAll("#linearChart > *").remove();
 
-      const margins = { top: 80, bottom: 77, right: 13, left: 13 };
+      /**
+       * Get svg element for d3
+       * @type {SVGElement}
+       */
       const svg = d3.select(svgRef.current);
 
+      /**
+       * Margins in the svg container
+       * @type {{top: number, left: number, bottom: number, right: number}}
+       */
+      const margins = { top: 80, bottom: 77, right: 13, left: 13 };
+
+      /**
+       * Call the builder of linearChart which use d3 for create it
+       * @type {LinearChartBuilder}
+       */
       const linearChart = new LinearChartBuilder(
         dimOfLinearChart,
         margins,
@@ -35,6 +58,7 @@ const LinearChart = ({ dimOfLinearChart }) => {
         Style
       );
 
+      // Build the graph
       linearChart.buildGraph();
     }
   }, [dimOfLinearChart, datas]);

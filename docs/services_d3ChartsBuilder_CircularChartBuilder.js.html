@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: services/d3ChartsBuilder/CircularChartBuilder.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: services/d3ChartsBuilder/CircularChartBuilder.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import * as d3 from "d3";
+
+/**
+ * Class for build a CircularChart with d3.js
+ */
+class CircularChartBuilder {
+  // Constants for adapt colors if is necessary
+  COLOR_AREA = "#FF0101";
+  COLOR_AREA_EMPTY = "#FBFBFB";
+  COLOR_INNER = "#FFFFFF";
+
+  /**
+   * Constructor
+   * @param dimOfCircularChart Dimensions of svg container
+   * @param margins Margins in svg for the graph
+   * @param svg svg container
+   * @param userData Datas fetch from api
+   */
+  constructor(dimOfCircularChart, margins, svg, userData) {
+    this.dimOfCircularChart = dimOfCircularChart;
+    this.margins = margins;
+    this.svg = svg;
+    this.userData = userData;
+
+    /**
+     * Width of graph
+     * @type {number}
+     */
+    this.graphWidth =
+      this.dimOfCircularChart.width - this.margins.left - this.margins.right;
+    /**
+     * Height of the graph
+     * @type {number}
+     */
+    this.graphHeight =
+      this.dimOfCircularChart.height - this.margins.bottom - this.margins.top;
+
+    // Init graph group
+    this.graph = "";
+  }
+
+  /**
+   * Build the graph
+   */
+  buildGraph = () => {
+    this.initGraph();
+    this.getGraph();
+    this.getLabels();
+  };
+
+  /**
+   *  Initialize the graph
+   */
+  initGraph = () => {
+    // Move the center of the grapĥ
+    const translateX = this.dimOfCircularChart.width / 2;
+    const translateY = this.dimOfCircularChart.height / 2;
+
+    /**
+     * Group svg for graph elements
+     * @type {SVGElement}
+     */
+    this.graph = this.svg
+      .append("g")
+      .attr("transform", `translate(${translateX}, ${translateY})`);
+  };
+
+  /**
+   * Construct and get labels and title for the LinearChart
+   */
+  getLabels = () => {
+    const label = this.graph.append("g").attr("font-weight", 500);
+
+    // Title "Score"
+    label
+      .append("text")
+      .text("Score")
+      .attr("x", -this.graphWidth / 2)
+      .attr("y", -this.graphHeight / 2);
+
+    const pourcent = label.append("g");
+
+    // Pourcents with interpolation
+    pourcent
+      .append("text")
+      .attr("class", "pourcent-text")
+      .attr("font-size", 18)
+      .text(this.userData.todayScore * 100)
+      .attr("x", -5)
+      .transition()
+      .duration(2000)
+      .ease(d3.easeCircleOut)
+      .textTween((d) => d3.interpolateRound(0, this.userData.todayScore * 100));
+    pourcent
+      .append("text")
+      .attr("class", "pourcent-text")
+      .attr("font-size", 18)
+      .text("%")
+      .attr("x", 15);
+
+    // Subtitle
+    const subtitle = pourcent
+      .append("text")
+      .attr("class", "pourcent-text")
+      .attr("font-size", 12)
+      .attr("opacity", 0.6);
+    subtitle.append("tspan").text("de votre").attr("x", 0).attr("y", 30);
+    subtitle.append("tspan").text("objectif").attr("x", 0).attr("y", 50);
+
+    d3.selectAll(".pourcent-text").each((d, i, e) => {
+      const w = e[i].getBBox().width;
+      d3.select(e[i]).attr("transform", `translate(${-w / 2}, 0)`);
+    });
+  };
+
+  /**
+   * Construct the linearchart elements
+   */
+  getGraph = () => {
+    /**
+     * D3 Calcul angle of pie
+     * @type {Array&lt;PieArc>}
+     */
+    const pies = d3.pie().sort(null)([
+      this.userData.todayScore,
+      1 - this.userData.todayScore,
+    ]);
+    /**
+     * D3 arcs rendered
+     * @type {Arc}
+     */
+    const segments = d3.arc().innerRadius(80).outerRadius(90).cornerRadius(10);
+
+    /**
+     * Interpolate function for animation
+     * @param d
+     * @returns {function(*): *}
+     */
+    const interpolate = (d) => {
+      const i = d3.interpolate(d.startAngle, d.endAngle);
+      return (t) => {
+        d.endAngle = i(t);
+        return segments(d);
+      };
+    };
+
+    // Add pie in the graph
+    this.graph
+      .append("g")
+      .selectAll("path")
+      .data(pies)
+      .enter()
+      .append("path")
+      .attr("d", segments)
+      .attr("fill", (d, i) =>
+        i === 0 ? this.COLOR_AREA : this.COLOR_AREA_EMPTY
+      )
+      .transition()
+      .duration(2000)
+      .ease(d3.easeCircleOut)
+      .attrTween("d", interpolate);
+
+    this.graph.append("circle").attr("r", 80).attr("fill", this.COLOR_INNER);
+  };
+}
+
+export default CircularChartBuilder;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="BarChartBuilder.html">BarChartBuilder</a></li><li><a href="CircularChartBuilder.html">CircularChartBuilder</a></li><li><a href="LinearChartBuilder.html">LinearChartBuilder</a></li><li><a href="RadarChartBuilder.html">RadarChartBuilder</a></li><li><a href="UserIdProvider.html">UserIdProvider</a></li></ul><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#BarChart">BarChart</a></li><li><a href="global.html#CircularChart">CircularChart</a></li><li><a href="global.html#Error404">Error404</a></li><li><a href="global.html#Header">Header</a></li><li><a href="global.html#LinearChart">LinearChart</a></li><li><a href="global.html#Menu">Menu</a></li><li><a href="global.html#mouseOverEvent">mouseOverEvent</a></li><li><a href="global.html#Profil">Profil</a></li><li><a href="global.html#RadarChart">RadarChart</a></li><li><a href="global.html#Sidebar">Sidebar</a></li><li><a href="global.html#useFetchDatas">useFetchDatas</a></li><li><a href="global.html#UserIdContext">UserIdContext</a></li><li><a href="global.html#UserKeyDatas">UserKeyDatas</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.10</a> on Wed May 11 2022 18:26:51 GMT+0200 (heure d’été d’Europe centrale)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

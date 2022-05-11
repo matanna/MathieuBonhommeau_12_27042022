@@ -5,15 +5,25 @@ import Style from "./BarChart.module.scss";
 import { BarChartBuilder, useFetchDatas } from "../../services";
 import { UserIdContext } from "../../context/UserIdContext";
 
+/**
+ * Component for creating a bar chart using d3
+ * @param dimOfBarChart Object
+ * @returns {JSX.Element} A svg element with the id barChart, the className barChart, the ref svgRef, the width 100%, the height 100%
+ */
 const BarChart = ({ dimOfBarChart }) => {
-  // Init reference of the svg which displayed the graph
+  /**
+   * Reference of the svg which displayed the graph
+   * @type {React.MutableRefObject}
+   */
   const svgRef = useRef(null);
 
+  /**
+   * UserId which is retrieved by the context
+   * @type {string}
+   */
   const userId = useContext(UserIdContext);
 
-  /**
-   * Get datas from api
-   */
+  // Get datas from api
   const { datas, error } = useFetchDatas(userId, "activity");
 
   /**
@@ -22,10 +32,12 @@ const BarChart = ({ dimOfBarChart }) => {
   useEffect(() => {
     // Launch build graph only if all datas available
     if (Object.keys(datas).length !== 0 && dimOfBarChart.width) {
-      // Remove all elements in svg for displayed the new ones with the new datas
+      // First, remove all elements in svg for displayed the new ones with the new datas
       d3.selectAll("#barChart > *").remove();
 
-      // Get datas for fill the graph
+      /**
+       * Adapt datas for fill the graph
+       */
       const activityDatas = datas.sessions.map((session, i) => ({
         kilogram: session.kilogram,
         day: session.day,
@@ -33,13 +45,22 @@ const BarChart = ({ dimOfBarChart }) => {
         calories: session.calories,
       }));
 
-      // Get svg element for d3
+      /**
+       * Get svg element for d3
+       * @type {SVGElement}
+       */
       const svg = d3.select(svgRef.current);
 
-      // Margin in svg for the graph
+      /**
+       * Margins in the svg container
+       * @type {{top: number, left: number, bottom: number, right: number}}
+       */
       const margins = { top: 90, right: 90, left: 43, bottom: 62.5 };
 
-      // Call the constructor of barChart which use d3 for create it
+      /**
+       * Call the builder of barChart which use d3 for create it
+       * @type {BarChartBuilder}
+       */
       const barChart = new BarChartBuilder(
         dimOfBarChart,
         margins,
@@ -47,7 +68,7 @@ const BarChart = ({ dimOfBarChart }) => {
         activityDatas,
         Style
       );
-
+      // Build the graph
       barChart.buildGraph();
     }
   }, [datas, dimOfBarChart]);

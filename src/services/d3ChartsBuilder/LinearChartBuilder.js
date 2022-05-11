@@ -1,30 +1,42 @@
 import * as d3 from "d3";
 import mouseOverEvent from "./mouseOverEvent";
 
+/**
+ * Class for build a LinearChart with d3.js
+ */
 class LinearChartBuilder {
+  // Constants for adapt colors if is necessary
   COLOR = "#FFFFFF";
 
-  constructor(dimOfLinearChart, margins, svg, userSessions, Style) {
-    // Dimensions of svg container
+  /**
+   * Constructor
+   * @param dimOfLinearChart Dimensions of svg container
+   * @param margins Margins in svg for the graph
+   * @param svg svg container
+   * @param userSessions Datas fetch from api
+   */
+  constructor(dimOfLinearChart, margins, svg, userSessions) {
     this.dimOfLinearChart = dimOfLinearChart;
-    // Margins in svg for the graph
     this.margins = margins;
-    // svg container
     this.svg = svg;
-    // Datas fetch from api
     this.userSessions = userSessions;
-    // Style from react component module scss
-    this.Style = Style;
 
     // Real dimensions of the graph
+    /**
+     * Width of the graph
+     * @type {number}
+     */
     this.graphWidth =
       this.dimOfLinearChart.width - this.margins.left - this.margins.right;
+    /**
+     * Height of the graph
+     * @type {number}
+     */
     this.graphHeight =
       this.dimOfLinearChart.height - this.margins.bottom - this.margins.top;
 
-    // Init graph group
+    // Init graph group and scales
     this.graph = "";
-    // Init scales
     this.x = "";
     this.y = "";
   }
@@ -43,6 +55,10 @@ class LinearChartBuilder {
    *  Initialize the graph
    */
   initGraph = () => {
+    /**
+     * Graph group in the SVG element
+     * @type {SVGElement}
+     */
     this.graph = this.svg
       .append("g")
       .attr(
@@ -50,8 +66,15 @@ class LinearChartBuilder {
         `translate(${this.margins.right}, ${this.margins.top})`
       );
 
-    // Get min and max values for x axis and y axis
+    /**
+     * Get min and max values for x axis
+     * @type {[string, string]}
+     */
     const minMaxX = d3.extent(this.userSessions.sessions.map((e) => e.day));
+    /**
+     * Get min and max values for y axis
+     * @type {[number, number]}
+     */
     const minMaxY = d3.extent(
       this.userSessions.sessions.map((e) => e.sessionLength)
     );
@@ -61,11 +84,18 @@ class LinearChartBuilder {
       .domain([0, this.userSessions.sessions.map((e) => e.day).length - 1])
       .range([0.6, 0]);
 
-    // Sacle for axes
+    /**
+     * Sacle for axe x
+     * @type {ScaleLinear<number>}
+     */
     this.x = d3
       .scaleLinear()
       .domain([parseInt(minMaxX[0]), parseInt(minMaxX[1])])
       .range([0, this.graphWidth]);
+    /**
+     * Sacle for axe y
+     * @type {ScaleLinear<number>}
+     */
     this.y = d3
       .scaleLinear()
       .domain([parseInt(minMaxY[0]), parseInt(minMaxY[1]) + 10])
@@ -88,7 +118,7 @@ class LinearChartBuilder {
   };
 
   /**
-   * Buid axes of the graph
+   * Build axes of the graph
    */
   getAxes() {
     const axisXGroup = this.graph
@@ -98,12 +128,20 @@ class LinearChartBuilder {
 
     const week = ["L", "M", "M", "J", "V", "S", "D"];
 
+    /**
+     * Axis X
+     * @type {Axis}
+     */
     const axisX = d3
       .axisBottom(this.x)
       .ticks(this.userSessions.sessions.length)
       .tickPadding(40)
       .tickSize(0)
       .tickFormat((d) => week[d - 1]);
+    /**
+     * Axis Y
+     * @type {Axis}
+     */
     const axisY = d3.axisLeft(this.y).ticks(0);
 
     axisXGroup

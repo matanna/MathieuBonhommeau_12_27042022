@@ -1,5 +1,9 @@
 import * as d3 from "d3";
 
+/**
+ * Function for change opacity on element when mouseover or mouseout
+ * @param className The name of the class element we want to be affected
+ */
 const mouseOverEvent = (className) => {
   d3.selectAll(`.text-${className}`).each((d, i, e) => {
     const w = e[i].getBBox().width;

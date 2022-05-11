@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: pages/Profil/Profil.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: pages/Profil/Profil.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useEffect, useRef, useState } from "react";
+import Style from "./Profil.module.scss";
+import {
+  BarChart,
+  CircularChart,
+  LinearChart,
+  RadarChart,
+} from "../../components";
+import { Navigate, useParams } from "react-router-dom";
+import UserKeyDatas from "../../components/UserKeyDatas/UserKeyDatas";
+import {
+  calorieIcon,
+  carbohydrateIcon,
+  proteinIcon,
+  lipidIcon,
+} from "../../assets";
+import { useFetchDatas } from "../../services";
+import { UserIdProvider } from "../../context/UserIdContext";
+import { AxiosError } from "axios";
+
+/**
+ * Component for display Profil page which contains the user dashboard
+ * @returns {JSX.Element}  The profil page
+ */
+const Profil = () => {
+  // Get user id from the url
+  const params = useParams();
+  const userId = params.user;
+
+  // State for width and height of BarChart
+  const [dimOfBarChart, setDimOfBarChart] = useState({
+    width: null,
+    height: null,
+  });
+  // State for width and height of LinearChart
+  const [dimOfLinearChart, setDimOfLinearChart] = useState({
+    width: null,
+    height: null,
+  });
+  // State for width and height of RadarChart
+  const [dimOfRadarChart, setDimOfRadarChart] = useState({
+    width: null,
+    height: null,
+  });
+  // State for width and height of CircularChart
+  const [dimOfCircularChart, setDimOfCircularChart] = useState({
+    width: null,
+    height: null,
+  });
+
+  // Ref of div which contains barchart graph, allow retrieve size of it (width and height)
+  const barChartRef = useRef(null);
+  // Ref of div which contains linearchart graph, allow retrieve size of it (width and height)
+  const linearChartRef = useRef(null);
+  // Ref of div which contains radarchart graph, allow retrieve size of it (width and height)
+  const radarChartRef = useRef(null);
+  // Ref of div which contains circularchart graph, allow retrieve size of it (width and height)
+  const circularChartRef = useRef(null);
+
+  /**
+   * Save the dimensions of 4 graphs in corresponding state
+   * These dimensions are used by graphs for adapt their svg size
+   */
+  useEffect(() => {
+    setDimOfBarChart({
+      width: barChartRef.current.offsetWidth,
+      height: barChartRef.current.offsetHeight,
+    });
+    setDimOfLinearChart({
+      width: linearChartRef.current.offsetWidth,
+      height: linearChartRef.current.offsetHeight,
+    });
+    setDimOfRadarChart({
+      width: radarChartRef.current.offsetWidth,
+      height: radarChartRef.current.offsetHeight,
+    });
+    setDimOfCircularChart({
+      width: circularChartRef.current.offsetWidth,
+      height: circularChartRef.current.offsetHeight,
+    });
+  }, []);
+
+  // Get datas from api
+  const { datas, error } = useFetchDatas(userId, "");
+
+  // State for keep main infos for a user
+  const [userInfos, setUserInfos] = useState({});
+
+  // Save in state main user infos when the component is render and when datas change
+  useEffect(() => {
+    if (Object.keys(datas).length !== 0) {
+      setUserInfos(datas.userInfos);
+    }
+  }, [datas]);
+
+  // If Axios / Api returns an error, the user is redirected to the error page
+  return error instanceof AxiosError || error instanceof Error ? (
+    &lt;Navigate to="/error" replace="true" />
+  ) : (
+    &lt;UserIdProvider value={userId}>
+      &lt;div role="heading" aria-level="1" className={Style.titleContainer}>
+        &lt;h1 className={Style.title}>
+          Bonjour{" "}
+          &lt;span className={Style.userName}>
+            {userInfos &amp;&amp; userInfos.firstName}
+          &lt;/span>
+        &lt;/h1>
+        &lt;p>Félicitation ! Vous avez explosé vos objectifs hier 👏&lt;/p>
+      &lt;/div>
+      &lt;section>
+        &lt;h2 className={Style.hiddenTitle}> Tableau de bord&lt;/h2>
+        &lt;div className={Style.dashboard}>
+          &lt;div className={Style.graphs}>
+            &lt;div ref={barChartRef} className={Style.barChart}>
+              &lt;BarChart dimOfBarChart={dimOfBarChart} />
+            &lt;/div>
+            &lt;div ref={linearChartRef} className={Style.linearChart}>
+              &lt;LinearChart dimOfLinearChart={dimOfLinearChart} />
+            &lt;/div>
+            &lt;div ref={radarChartRef} className={Style.radarChart}>
+              &lt;RadarChart dimOfRadarChart={dimOfRadarChart} />
+            &lt;/div>
+            &lt;div ref={circularChartRef} className={Style.circularChart}>
+              &lt;CircularChart dimOfCircularChart={dimOfCircularChart} />
+            &lt;/div>
+          &lt;/div>
+          &lt;div className={Style.userInfos}>
+            &lt;UserKeyDatas dataName="calorie" icon={calorieIcon} />
+            &lt;UserKeyDatas dataName="protein" icon={proteinIcon} />
+            &lt;UserKeyDatas dataName="carbohydrate" icon={carbohydrateIcon} />
+            &lt;UserKeyDatas dataName="lipid" icon={lipidIcon} />
+          &lt;/div>
+        &lt;/div>
+      &lt;/section>
+    &lt;/UserIdProvider>
+  );
+};
+
+export default Profil;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="BarChartBuilder.html">BarChartBuilder</a></li><li><a href="CircularChartBuilder.html">CircularChartBuilder</a></li><li><a href="LinearChartBuilder.html">LinearChartBuilder</a></li><li><a href="RadarChartBuilder.html">RadarChartBuilder</a></li><li><a href="UserIdProvider.html">UserIdProvider</a></li></ul><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#BarChart">BarChart</a></li><li><a href="global.html#CircularChart">CircularChart</a></li><li><a href="global.html#Error404">Error404</a></li><li><a href="global.html#Header">Header</a></li><li><a href="global.html#LinearChart">LinearChart</a></li><li><a href="global.html#Menu">Menu</a></li><li><a href="global.html#mouseOverEvent">mouseOverEvent</a></li><li><a href="global.html#Profil">Profil</a></li><li><a href="global.html#RadarChart">RadarChart</a></li><li><a href="global.html#Sidebar">Sidebar</a></li><li><a href="global.html#useFetchDatas">useFetchDatas</a></li><li><a href="global.html#UserIdContext">UserIdContext</a></li><li><a href="global.html#UserKeyDatas">UserKeyDatas</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.10</a> on Wed May 11 2022 18:26:51 GMT+0200 (heure d’été d’Europe centrale)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

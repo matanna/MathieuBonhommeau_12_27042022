@@ -1,32 +1,44 @@
 import * as d3 from "d3";
 import mouseOverEvent from "./mouseOverEvent";
 
+/**
+ * Class for build a BarChart with d3.js
+ */
 class BarChartBuilder {
+  // Constants for adapt colors if is necessary
   KGS_BAR_COLOR = "#282D30";
   CALORIES_BAR_COLOR = "#E60000";
   TEXT_AXIS_COLOR = "#74798C";
 
-  constructor(dimOfBarChart, margins, svg, activityDatas, Style) {
-    // Dimensions of svg container
+  /**
+   * Constructor
+   * @param dimOfBarChart Dimensions of svg container
+   * @param margins Margins in svg for the graph
+   * @param svg svg container
+   * @param activityDatas Datas fetch from api
+   */
+  constructor(dimOfBarChart, margins, svg, activityDatas) {
     this.dimOfBarChart = dimOfBarChart;
-    // Margins in svg for the graph
     this.margins = margins;
-    // svg container
     this.svg = svg;
-    // Datas fetch from api
     this.activityDatas = activityDatas;
-    // Style from react component module scss
-    this.Style = Style;
 
-    // Real dimensions of the graph
+    /**
+     * Width of graph
+     * @type {number}
+     */
     this.graphWidth =
       this.dimOfBarChart.width - 20 - this.margins.right - this.margins.left;
+
+    /**
+     * Height of graph
+     * @type {number}
+     */
     this.graphHeight =
       this.dimOfBarChart.height - this.margins.top - this.margins.bottom;
 
-    // Init graph group
+    // Init svg group and scales
     this.graph = "";
-    // Init scales
     this.x = "";
     this.yKgs = "";
     this.yCalories = "";
@@ -46,7 +58,10 @@ class BarChartBuilder {
    *  Initialize the graph
    */
   initGraph = () => {
-    // Groups for bars
+    /**
+     * Group svg for graph elements
+     * @type {SVGElement}
+     */
     this.graph = this.svg
       .append("g")
       .attr(
@@ -54,11 +69,22 @@ class BarChartBuilder {
         `translate(${this.margins.left}, ${this.margins.top})`
       );
 
-    // Get min and max of kgs, nbDay and calories for adapt scale of axis
+    /**
+     * Get min and max of kgs for calculate scale of axis right (visible)
+     * @type {[number, number]}
+     */
     const minMaxKgs = d3.extent(this.activityDatas, (d) => d.kilogram);
+
+    /**
+     * Get min and max of calories for calculate scale of axis left (hidden)
+     * @type {[number, number]}
+     */
     const minMaxCalories = d3.extent(this.activityDatas, (d) => d.calories);
 
-    // Setup of axis X for NbDay and scale
+    /**
+     * D3 Scale for axis bottom (nbDay)
+     * @type {ScaleBand<string>}
+     */
     this.x = d3
       .scaleBand()
       .domain(this.activityDatas.map((d) => d.nbDay))
@@ -66,13 +92,19 @@ class BarChartBuilder {
       .paddingInner(0.95)
       .paddingOuter(0.06);
 
-    // Setup of axis Y for Kgs and scale
+    /**
+     * D3 Scale for axis right yKgs
+     * @type {ScaleLinear<number>}
+     */
     this.yKgs = d3
       .scaleLinear()
       .domain([minMaxKgs[0] - 1, minMaxKgs[1] + 1])
       .range([this.graphHeight, 0]);
 
-    // Setup of axis Y for Calories and scale
+    /**
+     * D3 scale for axis left yCalories
+     * @type {ScaleLinear<number>}
+     */
     this.yCalories = d3
       .scaleLinear()
       .domain([minMaxCalories[0] - 100, minMaxCalories[1] + 100])
@@ -135,20 +167,32 @@ class BarChartBuilder {
    * Construct axes for the graph on x and y
    */
   getAxes() {
-    // Group for axis X in graph group
+    /**
+     * SVG group for axis X in graph group
+     */
     const AxisXgroup = this.graph
       .append("g")
       .attr("class", "axeX")
       .attr("transform", `translate(0, ${this.graphHeight})`);
 
-    // Group for axis Y in graph group
+    /**
+     * SVG group for axis Y in graph group
+     */
     const AxisYgroup = this.graph
       .append("g")
       .attr("class", "axeY")
       .attr("transform", `translate(${this.graphWidth}, 0)`);
 
-    // Creating Axis
+    /**
+     * Axis X
+     * @type {Axis<AxisDomain>}
+     */
     const axisX = d3.axisBottom(this.x).tickSize(0).tickPadding(20);
+
+    /**
+     * Axis Y
+     * @type {Axis<AxisDomain>}
+     */
     const axisY = d3
       .axisRight(this.yKgs)
       .ticks(3)
@@ -183,6 +227,9 @@ class BarChartBuilder {
    */
   getGraph = () => {
     // Link all rect / bars to each datas
+    /**
+     * SVG rects for bars
+     */
     const rects = this.graph.selectAll("rect").data(this.activityDatas);
     // Link all circle for rounded corner on each bars
     const circles = this.graph.selectAll("circle").data(this.activityDatas);
@@ -291,7 +338,7 @@ class BarChartBuilder {
   }
 
   /**
-   * Construct elements whiwh are displayed on mouseover event
+   * Construct elements which are displayed on mouseover event
    * @param rects D3 elements
    */
   getOverElements = (rects) => {

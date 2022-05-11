@@ -2,6 +2,10 @@ import { Route, Routes } from "react-router-dom";
 import { Header, Sidebar } from "../components";
 import { Profil, Error404 } from "../pages";
 
+/**
+ * Router of the application / Main component
+ * @returns {JSX.Element}
+ */
 function App() {
   return (
     <div className="App">

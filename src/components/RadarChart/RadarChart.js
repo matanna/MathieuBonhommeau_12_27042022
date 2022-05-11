@@ -5,15 +5,25 @@ import * as d3 from "d3";
 import { RadarChartBuilder, useFetchDatas } from "../../services";
 import { UserIdContext } from "../../context/UserIdContext";
 
+/**
+ * Component for creating a radar chart using d3
+ * @param dimOfRadarChart Object
+ * @returns {JSX.Element} A svg element with the id radarChart, the className radarChart, the ref svgRef, the width 100%, the height 100%
+ */
 const RadarChart = ({ dimOfRadarChart }) => {
-  // Init reference of the svg which displayed the graph
+  /**
+   * Reference of the svg which displayed the graph
+   * @type {React.MutableRefObject}
+   */
   const svgRef = useRef(null);
 
+  /**
+   * UserId which is retrieved by the context
+   * @type {string}
+   */
   const userId = useContext(UserIdContext);
 
-  /**
-   * Get datas from api
-   */
+  // Get datas from api
   const { datas, error } = useFetchDatas(userId, "performance");
 
   /**
@@ -21,9 +31,19 @@ const RadarChart = ({ dimOfRadarChart }) => {
    */
   useEffect(() => {
     if (Object.keys(datas).length !== 0 && dimOfRadarChart.width) {
-      // Remove all elements in svg for displayed the new ones with the new datas
+      // First, remove all elements in svg for displayed the new ones with the new datas
       d3.selectAll("#radarChart > *").remove();
 
+      /**
+       * Get svg element for d3
+       * @type {SVGElement}
+       */
+      const svg = d3.select(svgRef.current);
+
+      /**
+       * Margin in svg for the graph and adapt them in terms of dimensions of container
+       * @type {{top: number, left: number, bottom: number, right: number}}
+       */
       let margins = { top: 40, bottom: 40, right: 40, left: 40 };
       if (dimOfRadarChart.width < 360) {
         margins = { top: 20, bottom: 20, right: 20, left: 20 };
@@ -31,8 +51,11 @@ const RadarChart = ({ dimOfRadarChart }) => {
       if (dimOfRadarChart.width < 300) {
         margins = { top: 10, bottom: 10, right: 10, left: 10 };
       }
-      const svg = d3.select(svgRef.current);
 
+      /**
+       * Call the builder of linearChart which use d3 for create it
+       * @type {RadarChartBuilder}
+       */
       const radarChart = new RadarChartBuilder(
         dimOfRadarChart,
         margins,
@@ -41,6 +64,7 @@ const RadarChart = ({ dimOfRadarChart }) => {
         Style
       );
 
+      // Build the graph
       radarChart.buildGraph();
     }
   }, [datas, dimOfRadarChart]);

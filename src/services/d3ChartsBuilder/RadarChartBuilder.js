@@ -1,33 +1,47 @@
 import * as d3 from "d3";
 
+/**
+ * Class for build a RadarChart with d3.js
+ */
 class RadarChartBuilder {
+  // Constants for adapt colors if is necessary
   COLOR_AREA = "#FF0101";
   COLOR = "#FFFFFF";
 
-  constructor(dimOfRadarChart, margins, svg, userPerformance, Style) {
-    // Dimensions of svg container
+  /**
+   * Constructor
+   * @param dimOfRadarChart Dimensions of svg container
+   * @param margins Margins in svg for the graph
+   * @param svg svg container
+   * @param userPerformance Datas fetch from api
+   */
+  constructor(dimOfRadarChart, margins, svg, userPerformance) {
     this.dimOfRadarChart = dimOfRadarChart;
-    // Margins in svg for the graph
     this.margins = margins;
-    // svg container
     this.svg = svg;
-    // Datas fetch from api
     this.userPerformance = userPerformance;
-    // Style from react component module scss
-    this.Style = Style;
 
-    // Real dimensions of the graph
+    /**
+     * Width of graph
+     * @type {number}
+     */
     this.graphWidth =
       this.dimOfRadarChart.width - this.margins.left - this.margins.right;
+    /**
+     * Height of graph
+     * @type {number}
+     */
     this.graphHeight =
       this.dimOfRadarChart.height - this.margins.bottom - this.margins.top;
+    /**
+     * Diameter of graph
+     * @type {number}
+     */
     this.graphDiameter =
       this.dimOfRadarChart.width - this.margins.left - this.margins.right;
 
-    // Init graph group
+    // Init graph group and scales
     this.graph = "";
-
-    // Init scale
     this.rad = "";
     this.x = "";
     this.y = "";
@@ -51,20 +65,34 @@ class RadarChartBuilder {
     // Move the center of the grapĥ
     const translateX = (this.dimOfRadarChart.width - this.graphWidth) / 2;
     const translateY = (this.dimOfRadarChart.height - this.graphHeight) / 2;
+
+    /**
+     * Svg group contains all the graph
+     * @type {SVGElement}
+     */
     this.graph = this.svg
       .append("g")
       .attr("transform", `translate(${translateX}, ${translateY})`);
 
-    // Get max value of data for calculate scale
+    /**
+     * Get max value of data for calculate scale
+     * @type {number}
+     */
     this.max = d3.max(this.userPerformance.data.map((e) => e.value));
 
-    // Scales for calculate coordinates
-    // rad is for calculate the angle in radian
+    /**
+     * Scale calculate in radian
+     * @type {ScaleLinear}
+     */
     this.rad = d3
       .scaleLinear()
       .domain([0, Object.keys(this.userPerformance.kind).length])
       .range([0, Math.PI * 2]);
-    // r is for calculate the size of the radius
+
+    /**
+     * Scale for calculate the size of the radius
+     * @type {ScaleLinear}
+     */
     this.r = d3
       .scaleLinear()
       .domain([0, parseInt(this.max) + 50])
@@ -77,7 +105,10 @@ class RadarChartBuilder {
   getLabels = () => {
     const labelGroup = this.graph.append("g");
 
-    // Generate coordinate of each label
+    /**
+     * Generate coordinate of each label
+     * @type {array} Array of coordinates
+     */
     const points = Object.keys(this.userPerformance.kind).map((e) => [
       this.graphWidth / 2 +
         this.r(parseInt(this.max + 120)) *
@@ -110,8 +141,15 @@ class RadarChartBuilder {
    * Buid axes of the graph
    */
   getAxes = () => {
-    // Calculate space between each axes of the radar
+    /**
+     * Space between each axes of the radar
+     * @type {number}
+     */
     const space = parseInt(this.max + 20) / 4;
+    /**
+     * Coordinates of axes
+     * @type {number[]}
+     */
     const axes = [space / 2, space, space * 2, space * 3, space * 4];
 
     const AxisGroup = this.graph.append("g");

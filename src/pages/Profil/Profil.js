@@ -18,6 +18,10 @@ import { useFetchDatas } from "../../services";
 import { UserIdProvider } from "../../context/UserIdContext";
 import { AxiosError } from "axios";
 
+/**
+ * Component for display Profil page which contains the user dashboard
+ * @returns {JSX.Element}  The profil page
+ */
 const Profil = () => {
   // Get user id from the url
   const params = useParams();
@@ -28,20 +32,17 @@ const Profil = () => {
     width: null,
     height: null,
   });
-
-  // State for width and height of BarChart
+  // State for width and height of LinearChart
   const [dimOfLinearChart, setDimOfLinearChart] = useState({
     width: null,
     height: null,
   });
-
-  // State for width and height of BarChart
+  // State for width and height of RadarChart
   const [dimOfRadarChart, setDimOfRadarChart] = useState({
     width: null,
     height: null,
   });
-
-  // State for width and height of BarChart
+  // State for width and height of CircularChart
   const [dimOfCircularChart, setDimOfCircularChart] = useState({
     width: null,
     height: null,
@@ -51,11 +52,15 @@ const Profil = () => {
   const barChartRef = useRef(null);
   // Ref of div which contains linearchart graph, allow retrieve size of it (width and height)
   const linearChartRef = useRef(null);
-  // Ref of div which contains linearchart graph, allow retrieve size of it (width and height)
+  // Ref of div which contains radarchart graph, allow retrieve size of it (width and height)
   const radarChartRef = useRef(null);
   // Ref of div which contains circularchart graph, allow retrieve size of it (width and height)
   const circularChartRef = useRef(null);
 
+  /**
+   * Save the dimensions of 4 graphs in corresponding state
+   * These dimensions are used by graphs for adapt their svg size
+   */
   useEffect(() => {
     setDimOfBarChart({
       width: barChartRef.current.offsetWidth,
@@ -75,20 +80,20 @@ const Profil = () => {
     });
   }, []);
 
-  // State for user infos
-  const [userInfos, setUserInfos] = useState({});
-
-  /**
-   * Get datas from api
-   */
+  // Get datas from api
   const { datas, error } = useFetchDatas(userId, "");
 
+  // State for keep main infos for a user
+  const [userInfos, setUserInfos] = useState({});
+
+  // Save in state main user infos when the component is render and when datas change
   useEffect(() => {
     if (Object.keys(datas).length !== 0) {
       setUserInfos(datas.userInfos);
     }
   }, [datas]);
 
+  // If Axios / Api returns an error, the user is redirected to the error page
   return error instanceof AxiosError || error instanceof Error ? (
     <Navigate to="/error" replace="true" />
   ) : (

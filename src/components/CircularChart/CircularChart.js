@@ -5,15 +5,25 @@ import * as d3 from "d3";
 import { CircularChartBuilder, useFetchDatas } from "../../services";
 import { UserIdContext } from "../../context/UserIdContext";
 
+/**
+ * Component for creating a circular chart using d3
+ * @param dimOfCircularChart Object
+ * @returns {JSX.Element} A svg element with the id circularChart, the className circularChart, the ref svgRef, the width 100%, the height 100%
+ */
 const CircularChart = ({ dimOfCircularChart }) => {
-  // Init reference of the svg which displayed the graph
+  /**
+   * Reference of the svg which displayed the graph
+   * @type {React.MutableRefObject}
+   */
   const svgRef = useRef(null);
 
+  /**
+   * UserId which is retrieved by the context
+   * @type {string}
+   */
   const userId = useContext(UserIdContext);
 
-  /**
-   * Get datas from api
-   */
+  // Get datas from api
   const { datas, error } = useFetchDatas(userId, "");
 
   /**
@@ -21,12 +31,25 @@ const CircularChart = ({ dimOfCircularChart }) => {
    */
   useEffect(() => {
     if (Object.keys(datas).length !== 0 && dimOfCircularChart.width) {
-      // Remove all elements in svg for displayed the new ones with the new datas
+      // First, remove all elements in svg for displayed the new ones with the new datas
       d3.selectAll("#circularChart > *").remove();
 
-      const margins = { top: 40, bottom: 40, right: 40, left: 40 };
+      /**
+       * Get svg element for d3
+       * @type {SVGElement>}
+       */
       const svg = d3.select(svgRef.current);
 
+      /**
+       * Margin in svg container
+       * @type {{top: number, left: number, bottom: number, right: number}}
+       */
+      const margins = { top: 40, bottom: 40, right: 40, left: 40 };
+
+      /**
+       * Call the builder of circularChart which use d3 for create it
+       * @type {CircularChartBuilder}
+       */
       const circularChart = new CircularChartBuilder(
         dimOfCircularChart,
         margins,
@@ -35,6 +58,7 @@ const CircularChart = ({ dimOfCircularChart }) => {
         Style
       );
 
+      // Build the graph
       circularChart.buildGraph();
     }
   });
