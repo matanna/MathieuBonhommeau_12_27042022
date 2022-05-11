@@ -116,7 +116,7 @@ const Profil = () => {
               <RadarChart dimOfRadarChart={dimOfRadarChart} />
             </div>
             <div ref={circularChartRef} className={Style.circularChart}>
-              <CircularChart dimOfCircularChar={dimOfCircularChart} />
+              <CircularChart dimOfCircularChart={dimOfCircularChart} />
             </div>
           </div>
           <div className={Style.userInfos}>
@@ -130,7 +130,5 @@ const Profil = () => {
     </UserIdProvider>
   );
 };
-
-Profil.propTypes = {};
 
 export default Profil;

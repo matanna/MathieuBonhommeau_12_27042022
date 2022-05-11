@@ -46,6 +46,9 @@ const UserKeyDatas = ({ dataName, icon }) => {
   );
 };
 
-UserKeyDatas.propTypes = {};
+UserKeyDatas.propTypes = {
+  dataName: PropTypes.string.isRequired,
+  icon: PropTypes.string.isRequired,
+};
 
 export default UserKeyDatas;

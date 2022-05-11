@@ -66,4 +66,11 @@ const BarChart = ({ dimOfBarChart }) => {
   );
 };
 
+BarChart.propTypes = {
+  dimOfBarChart: PropTypes.exact({
+    width: PropTypes.number,
+    height: PropTypes.number,
+  }).isRequired,
+};
+
 export default BarChart;

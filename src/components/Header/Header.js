@@ -1,10 +1,9 @@
 import React from "react";
-import PropTypes from "prop-types";
 import Menu from "../Menu/Menu";
 import Style from "./Header.module.scss";
 import { logo } from "../../assets";
 
-const Header = (props) => {
+const Header = () => {
   return (
     <header className={Style.headerContainer}>
       <div className={Style.logoContainer}>
@@ -14,7 +13,5 @@ const Header = (props) => {
     </header>
   );
 };
-
-Header.propTypes = {};
 
 export default Header;

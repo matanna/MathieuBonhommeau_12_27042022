@@ -59,6 +59,11 @@ const RadarChart = ({ dimOfRadarChart }) => {
   );
 };
 
-RadarChart.propTypes = {};
+RadarChart.propTypes = {
+  dimOfRadarChart: PropTypes.exact({
+    width: PropTypes.number,
+    height: PropTypes.number,
+  }).isRequired,
+};
 
 export default RadarChart;

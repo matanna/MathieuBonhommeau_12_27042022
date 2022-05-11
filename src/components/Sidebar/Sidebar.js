@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { NavLink } from "react-router-dom";
 import Style from "./Sidebar.module.scss";
 import { swim, bike, yoga, fitness } from "../../assets";
@@ -49,7 +48,5 @@ const Sidebar = () => {
     </div>
   );
 };
-
-Sidebar.propTypes = {};
 
 export default Sidebar;

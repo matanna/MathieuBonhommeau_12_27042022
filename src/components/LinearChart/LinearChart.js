@@ -53,6 +53,11 @@ const LinearChart = ({ dimOfLinearChart }) => {
   );
 };
 
-LinearChart.propTypes = {};
+LinearChart.propTypes = {
+  dimOfLinearChart: PropTypes.exact({
+    width: PropTypes.number,
+    height: PropTypes.number,
+  }).isRequired,
+};
 
 export default LinearChart;

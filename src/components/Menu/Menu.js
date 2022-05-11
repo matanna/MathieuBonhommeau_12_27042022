@@ -1,9 +1,8 @@
 import React from "react";
-import PropTypes from "prop-types";
 import Style from "./Menu.module.scss";
 import { NavLink } from "react-router-dom";
 
-const Menu = (props) => {
+const Menu = () => {
   return (
     <nav className={Style.nav}>
       <ul>
@@ -23,7 +22,5 @@ const Menu = (props) => {
     </nav>
   );
 };
-
-Menu.propTypes = {};
 
 export default Menu;
