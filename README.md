@@ -1,8 +1,7 @@
-MathieuBonhommeau_12_27042022
-================
+# MathieuBonhommeau_12_27042022
 
-Project 12 OC - DA Javascript / React
-----------------
+## Project 12 OC - DA Javascript / React
+
 ----------------
 ### Project description
 
