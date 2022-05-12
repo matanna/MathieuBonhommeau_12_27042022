@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/MathieuBonhommeau_12_27042022/static/css/main.11960bba.css",
-    "main.js": "/MathieuBonhommeau_12_27042022/static/js/main.195fd8f0.js",
+    "main.js": "/MathieuBonhommeau_12_27042022/static/js/main.c9014ee4.js",
     "static/media/swim.svg": "/MathieuBonhommeau_12_27042022/static/media/swim.4dc6f6a621a41ebf109406010f4c4ff6.svg",
     "static/media/bike.svg": "/MathieuBonhommeau_12_27042022/static/media/bike.46287c322229fcb84ee2cae3e23b0738.svg",
     "static/media/carbohydrateIcon.svg": "/MathieuBonhommeau_12_27042022/static/media/carbohydrateIcon.d55578cb0ebfcd9c2eeb3e62a17dcbb6.svg",
@@ -12,10 +12,10 @@
     "index.html": "/MathieuBonhommeau_12_27042022/index.html",
     "static/media/fitness.svg": "/MathieuBonhommeau_12_27042022/static/media/fitness.180ef6e652c39d45027c6c6942149146.svg",
     "main.11960bba.css.map": "/MathieuBonhommeau_12_27042022/static/css/main.11960bba.css.map",
-    "main.195fd8f0.js.map": "/MathieuBonhommeau_12_27042022/static/js/main.195fd8f0.js.map"
+    "main.c9014ee4.js.map": "/MathieuBonhommeau_12_27042022/static/js/main.c9014ee4.js.map"
   },
   "entrypoints": [
     "static/css/main.11960bba.css",
-    "static/js/main.195fd8f0.js"
+    "static/js/main.c9014ee4.js"
   ]
 }
