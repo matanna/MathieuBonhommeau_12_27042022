@@ -72,3 +72,9 @@ Exemple :
 
     1. http://localhost:3001/profil/12
     2. http://localhost:3001/profil/18
+
+---------------
+
+### Documentation
+
+The documentation is visible in ```/docs``` folder. Start the ```/docs/index.html``` in a browser and that's all
