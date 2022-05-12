@@ -1,0 +1,21 @@
+{
+  "files": {
+    "main.css": "/MathieuBonhommeau_12_27042022/static/css/main.11960bba.css",
+    "main.js": "/MathieuBonhommeau_12_27042022/static/js/main.16d5a60e.js",
+    "static/media/swim.svg": "/MathieuBonhommeau_12_27042022/static/media/swim.4dc6f6a621a41ebf109406010f4c4ff6.svg",
+    "static/media/bike.svg": "/MathieuBonhommeau_12_27042022/static/media/bike.46287c322229fcb84ee2cae3e23b0738.svg",
+    "static/media/carbohydrateIcon.svg": "/MathieuBonhommeau_12_27042022/static/media/carbohydrateIcon.d55578cb0ebfcd9c2eeb3e62a17dcbb6.svg",
+    "static/media/yoga.svg": "/MathieuBonhommeau_12_27042022/static/media/yoga.e1d6402f74a3a8a6c209fb986a6189c0.svg",
+    "static/media/lipidIcon.svg": "/MathieuBonhommeau_12_27042022/static/media/lipidIcon.506aaa87f75c618eee415abd6b2acb00.svg",
+    "static/media/proteinIcon.svg": "/MathieuBonhommeau_12_27042022/static/media/proteinIcon.1a36ed1667b0351859291dbed3bb4b33.svg",
+    "static/media/calorieIcon.svg": "/MathieuBonhommeau_12_27042022/static/media/calorieIcon.1cfbc2687138e6e6ba672a8541f46f72.svg",
+    "index.html": "/MathieuBonhommeau_12_27042022/index.html",
+    "static/media/fitness.svg": "/MathieuBonhommeau_12_27042022/static/media/fitness.180ef6e652c39d45027c6c6942149146.svg",
+    "main.11960bba.css.map": "/MathieuBonhommeau_12_27042022/static/css/main.11960bba.css.map",
+    "main.16d5a60e.js.map": "/MathieuBonhommeau_12_27042022/static/js/main.16d5a60e.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.11960bba.css",
+    "static/js/main.16d5a60e.js"
+  ]
+}
