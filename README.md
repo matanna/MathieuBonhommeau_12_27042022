@@ -41,7 +41,7 @@ https://github.com/OpenClassrooms-Student-Center/P9-front-end-dashboard
 
 **Solution 1 : With mock datas, without api**
 
-In the frontend app, change the variable for ```ENV=test``` in ```/.env``` file and start the application with this command :
+In the frontend app, change the variable for ```/env.test``` in ```/.env``` file and start the application with this command :
 
 ```npm start```
 
@@ -51,7 +51,7 @@ Then, the app works with mock datas.
 
 First, start the backend application. 
 
-After, in the frontend app, change the variable for ```ENV=prod``` in ```/.env``` file and start the application with this command :
+After, in the frontend app, change the variable for ```/env.prod``` in ```/.env``` file and start the application with this command :
 
 ```npm start```
 
